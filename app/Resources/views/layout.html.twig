@@ -64,25 +64,12 @@
                     </div>
                 </nav>
             {% endblock %}
-            {% block twitch %}
-            {#<div class="row">#}
-                {#<div class="col-xs-12 col-sm-7 col-md-8" id="videoTwitch">#}
-                    {#<div class="embed-responsive embed-responsive-16by9">#}
-                        {#<iframe src="http://www.twitch.tv/bersiroth/embed"></iframe>#}
-                    {#</div>#}
-                {#</div>#}
-                {#<div class="col-sm-5 col-md-4 hidden-xs">#}
-                    {#<iframe src="http://www.twitch.tv/bersiroth/chat?popout=" id="chatTwitch" width="100%"></iframe>#}
-                {#</div>#}
-            {#</div>#}
-            {#<br>#}
-            {% endblock %}
+            {{ render(controller("BersiBlogBundle:Default:twitch")) }}
             <div class="row">
                 <div class="col-sm-8" >
                     <div class="panel panel-default">
                         <div class="panel-body">
                             {% block body %}
-                                {{ render(controller("BersiBlogBundle:Default:AllNews")) }}
                                 <nav class="text-center">
                                     <ul class="pagination">
                                         <li>

@@ -3,6 +3,10 @@ bersi_blog_homepage:
     defaults: { _controller: BersiBlogBundle:Default:index }
 
 bersi_blog_news:
+    path:     /twitch
+    defaults: { _controller: BersiBlogBundle:Default:twitch }
+
+bersi_blog_news:
     path:     /{type}/{titre}
     defaults: { _controller: BersiBlogBundle:Default:news }
 

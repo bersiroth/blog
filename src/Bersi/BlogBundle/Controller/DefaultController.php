@@ -3,32 +3,29 @@
 namespace Bersi\BlogBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use GuzzleHttp\Client;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
-    {
-        return $this->render('::layout.html.twig');
-    }
-
-    public function newsAction($titre,$type)
+    public function newsAction($titre, $type)
     {
         $news = [[
-                'mois' => 'test',
-                'jour' => '25',
-                'titre' => '[test] qsddqsd',
-                'type' => 'jeux-video',
-                'auteur' => 'Bersiqsdqsdroth',
-                'image' => 'http://static.eclypsia.com/public/upload/cke/Events/E3%202014/sony/Bloodbourne_Ban_E3.jpg',
-                'contenu' => 'qsdqsborn'
-            ],
+            'mois' => 'test',
+            'jour' => '25',
+            'titre' => '[test] qsddqsd',
+            'type' => 'jeux-video',
+            'auteur' => 'Bersiqsdqsdroth',
+            'image' => 'http://static.eclypsia.com/public/upload/cke/Events/E3%202014/sony/Bloodbourne_Ban_E3.jpg',
+            'contenu' => 'qsdqsborn'
+        ]
         ];
 
         return $this->render('BersiBlogBundle::layout.html.twig',
             ['list_news' => $news]
-            );
+        );
     }
-    public function AllNewsAction()
+
+    public function indexAction()
     {
         $news = [
             [
@@ -39,7 +36,7 @@ class DefaultController extends Controller
                 'auteur' => 'Bersiroth',
                 'image' => 'http://static.eclypsia.com/public/upload/cke/Events/E3%202014/sony/Bloodbourne_Ban_E3.jpg',
                 'contenu' => 'Voici le test sur le jeux bloodborn'
-            ],[
+            ], [
                 'mois' => 'Mai',
                 'jour' => '12',
                 'titre' => '[avis] mangas FullMetal Alchemist',
@@ -49,8 +46,19 @@ class DefaultController extends Controller
                 'contenu' => 'Voici mon avis sur le mangas fullmetal alchemist'
             ],
         ];
-        return $this->render('BersiBlogBundle:default:news.html.twig',
+        return $this->render('BersiBlogBundle::layout.html.twig',
             ['list_news' => $news]
-            );
+        );
+    }
+
+    public function twitchAction()
+    {
+        $client = new Client();
+        $res = $client->get('https://api.twitch.tv/kraken/streams/bersiroth', ['verify' => false]);
+        $res = json_decode($res->getBody());
+        $live = $res->stream === null ? false : true;
+        return $this->render('BersiBlogBundle:default:twitch.html.twig',
+            ['is_live' => $live]
+        );
     }
 }
