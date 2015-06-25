@@ -1,0 +1,83 @@
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+}
+
+p, div {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+
+body {
+    background-color: #B6B6B6
+}
+
+.inverse-dropdown{
+    background-color: #222;
+    border-color: #080808;
+}
+
+.inverse-dropdown>li>a{
+      color: #999;
+}
+
+.inverse-dropdown>li>a:hover{
+     color: #fff;
+     background-color: black;
+}
+
+.date-news {
+    height: 65px;
+    width: 65px;
+    color: white;
+    background-color: rgb(2, 34, 93);
+    padding: 5px;
+}
+
+.date-news .jour {
+    font-size: 40px;
+    line-height: 1;
+    font-weight: bold;
+}
+
+.date-news .mois {
+    font-size: 12px;
+}
+
+.news header {
+    margin-bottom: 10px;
+    min-height: 65px;
+}
+
+.news .titre-news {
+    color : #3a8ac9;
+    font-weight: bold;
+    padding-left: 75px;
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: 700;
+    margin: 0;
+}
+
+@media (min-width: 991px) {
+    .news .titre-news {
+        font-size: 25px;
+    }
+}
+
+.news .auteur-news {
+    padding-left: 75px;
+}
+
+.news .titre-news a:hover {
+    text-decoration: none;
+}
+
+.news img {
+    padding-bottom: 15px;
+}
+
+hr{
+    border-top: 2px solid rgb(2, 34, 93);
+}

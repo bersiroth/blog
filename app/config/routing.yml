@@ -1,0 +1,4 @@
+bersi_blog:
+    resource: "@BersiBlogBundle/Resources/config/routing.yml"
+    prefix:   /
+

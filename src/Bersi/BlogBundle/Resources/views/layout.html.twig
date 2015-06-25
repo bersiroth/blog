@@ -1,0 +1,10 @@
+{% extends "::layout.html.twig" %}
+
+{% block body %}
+
+    {{ include("BersiBlogBundle:default:news.html.twig") }}
+
+    {% block BlogBundle_body %}
+    {% endblock %}
+
+{% endblock %}
