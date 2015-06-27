@@ -49,23 +49,21 @@ class DefaultController extends Controller
             ->add('save', 'submit')
             ->add('category', 'entity', array(
                 'class' => 'BersiBlogBundle:Category',
-                'property' => 'name'))
+                'choice_label' => 'name'))
             ->add('tags', 'entity', array(
                 'class' => 'BersiBlogBundle:Tag',
-                'property' => 'name',
+                'choice_label' => 'name',
                 'multiple' => true))
             ->add('author', 'entity', array(
                 'class' => 'BersiBlogBundle:Author',
-                'property' => 'pseudo'))
+                'choice_label' => 'pseudo'))
             ->getForm();
         $form->handleRequest($request);
-        if (file_exists(realpath(__DIR__ . '/../../../../../web/images/' . $article->getCategory()->getName() . '/' .$article->getSlug() . '.jpeg'))){
-            $image = '/images/' . $article->getCategory()->getName() . '/' .$article->getSlug() . '.jpeg';
-        }else{
-            $image = false;
+        $image = false;
+        if ($article->getId() !== null && file_exists(__DIR__ . '/../../../../../web/images/' . $article->getCategory()->getName() . '/' . $article->getSlug() . '.jpeg')) {
+            $image = '/images/' . $article->getCategory()->getName() . '/' . $article->getSlug() . '.jpeg';
         }
         if ($form->isValid()) {
-//            var_dump($form['image']);die;
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
