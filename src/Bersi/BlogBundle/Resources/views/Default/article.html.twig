@@ -1,0 +1,48 @@
+<div class="article">
+    {% for article in list_articles %}
+        <header>
+            <div class="date-article pull-left">
+                <div class="mois text-center">{{ article.mois }}</div>
+                <div class="jour text-center">{{ article.date|date('j') }}</div>
+            </div>
+            <div>
+                <h1 class="titre-article"><a href="{{ path('bersi_blog_article', { 'slug': article.slug, 'category': article.category.name }) }}">{{ article.title|upper }}</a></h1>
+                <div class="auteur-article">Par {{ article.author.pseudo }}</div>
+            </div>
+        </header>
+        <a href="{{ path('bersi_blog_article', { 'slug': article.slug, 'category': article.category.name }) }}"><img src="\images\{{ article.category.name }}\{{ article.slug }}.jpeg" class="img-responsive" alt="Responsive image"/></a>
+        <p>
+            {{ article.content }}
+        </p>
+        {% if list_articles|length > 1 %}
+            <div style="color : #3a8ac9;font-weight: bold;"><a href="{{ path('bersi_blog_article', { 'slug': article.slug, 'category': article.category.name }) }}">Lire la suite</a></div>
+            <br>
+        {% endif %}
+        <div class="pull-left" style="color: rgb(2, 34, 93);font-weight: bold;">Tags :&nbsp;</div><div>{% for tag in article.tags %}{{ tag.name }}, {% endfor %}</div>
+        <hr>
+    {% else %}
+        <h1>Pas (encore !) d'article</h1>
+    {% endfor %}
+
+    {% if list_articles|length > 10 %}
+        <nav class="text-center">
+            <ul class="pagination">
+                <li>
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+                <li>
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+</div>

@@ -27,7 +27,7 @@ body {
      background-color: black;
 }
 
-.date-news {
+.date-article {
     height: 65px;
     width: 65px;
     color: white;
@@ -35,22 +35,22 @@ body {
     padding: 5px;
 }
 
-.date-news .jour {
+.date-article .jour {
     font-size: 40px;
     line-height: 1;
     font-weight: bold;
 }
 
-.date-news .mois {
+.date-article .mois {
     font-size: 12px;
 }
 
-.news header {
+.article header {
     margin-bottom: 10px;
     min-height: 65px;
 }
 
-.news .titre-news {
+.article .titre-article {
     color : #3a8ac9;
     font-weight: bold;
     padding-left: 75px;
@@ -61,20 +61,20 @@ body {
 }
 
 @media (min-width: 991px) {
-    .news .titre-news {
+    .article .titre-article {
         font-size: 25px;
     }
 }
 
-.news .auteur-news {
+.article .auteur-article {
     padding-left: 75px;
 }
 
-.news .titre-news a:hover {
+.article .titre-article a:hover {
     text-decoration: none;
 }
 
-.news img {
+.article img {
     padding-bottom: 15px;
 }
 

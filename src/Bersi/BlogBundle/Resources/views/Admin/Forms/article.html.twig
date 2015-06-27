@@ -1,0 +1,65 @@
+<h3>Formulaire news</h3>
+
+<div class="well col-md-8">
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+    <div class="form-group">
+        {{ form_label(form.title, "Titre", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.title) }}
+        <div class="col-sm-9">
+            {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.author, "Auteur", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.author) }}
+        <div class="col-sm-9">
+            {{ form_widget(form.author, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.category, "Categories", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.category) }}
+        <div class="col-sm-9">
+            {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.content, "Contenu", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.title) }}
+        <div class="col-sm-9">
+            {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.date, "Date", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.date) }}
+        <div class="col-sm-9">
+            {{ form_widget(form.date) }}
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form_label(form.tags, "Tags", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.tags) }}
+        <div class="col-sm-9">
+            {{ form_widget(form.tags, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    {#<div class="form-group">#}
+        {#{{ form_label(form.image, "Image", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}#}
+        {#{{ form_errors(form.image) }}#}
+        {#<div class="col-sm-9">#}
+            {#{{ form_widget(form.image) }}#}
+        {#</div>#}
+    {#</div>#}
+    <div class="form-group">
+        {{ form_label(form.published, "Publier", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_errors(form.published) }}
+        <div class="col-sm-9">
+            {{ form_widget(form.published) }}
+        </div>
+    </div>
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>
