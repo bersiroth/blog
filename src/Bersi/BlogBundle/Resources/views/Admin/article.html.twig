@@ -32,7 +32,7 @@
                 <td>{{ article.category.name }}</td>
                 <td>{% for tag in article.tags %}{{ tag.name }}, {% endfor %}</td>
                 <td>
-                    {% if article.published == false %}
+                    {% if article.published == true %}
                         <button href="{{ path('admin_bersi_blog_publish_articles', { 'id': article.id}) }}"
                                 id="publication-{{ article.id }}" class="btn btn-success publication btn-xs" role="button">
                             <span class="glyphicon glyphicon glyphicon glyphicon-ok-circle" aria-hidden="true"></span>

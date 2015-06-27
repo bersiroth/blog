@@ -43,7 +43,7 @@ class DefaultController extends Controller
         $form = $this->get('form.factory')->createBuilder('form', $article)
             ->add('date', 'date')
             ->add('title', 'text')
-//            ->add('image', 'file')
+            ->add('image', 'file', array('mapped' => false, 'required' => false))
             ->add('content', 'textarea')
             ->add('published', 'checkbox', array('required' => false))
             ->add('save', 'submit')
@@ -59,8 +59,13 @@ class DefaultController extends Controller
                 'property' => 'pseudo'))
             ->getForm();
         $form->handleRequest($request);
+        if (file_exists(realpath(__DIR__ . '/../../../../../web/images/' . $article->getCategory()->getName() . '/' .$article->getSlug() . '.jpeg'))){
+            $image = '/images/' . $article->getCategory()->getName() . '/' .$article->getSlug() . '.jpeg';
+        }else{
+            $image = false;
+        }
         if ($form->isValid()) {
-//            var_dump($article);die;
+//            var_dump($form['image']);die;
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
@@ -68,18 +73,21 @@ class DefaultController extends Controller
                 'success',
                 'Creation / modification OK !'
             );
-//            $file = $article->getImage();
-//            $extension = $file->guessExtension();
-//            if (!$extension) $extension = 'bin';
-//            $goodExtension = ['jpeg', 'png', 'gif'];
-//            if (in_array($extension, $goodExtension)) {
-//                $path = realpath(__DIR__ . '/../../../../../web/images/' . $article->getCategory() . '/');
-//                $file->move($path, $article->getSlug() . '.' . $extension);
-//            }
+            $file = $form['image']->getData();
+            if ($file !== null) {
+                $extension = $file->guessExtension();
+                if (!$extension) $extension = 'bin';
+                $goodExtension = ['jpeg', 'png', 'gif'];
+                if (in_array($extension, $goodExtension)) {
+                    $path = realpath(__DIR__ . '/../../../../../web/images/' . $article->getCategory()->getName() . '/');
+                    $file->move($path, $article->getSlug() . '.' . $extension);
+                }
+            }
             return $this->redirect($this->generateUrl('admin_bersi_blog_articles'));
         }
         return $this->render('BersiBlogBundle:admin:addArticle.html.twig', array(
             'form' => $form->createView(),
+            'image' => $image,
         ));
     }
 
@@ -88,7 +96,7 @@ class DefaultController extends Controller
      */
     public function publishAction($id, Request $request)
     {
-        if($request->isXmlHttpRequest()){
+        if ($request->isXmlHttpRequest()) {
             $article = $this->getDoctrine()->getRepository('BersiBlogBundle:Article')->find($id);
             $state = $article->getPublished() == true ? false : true;
             $article->setPublished($state);
