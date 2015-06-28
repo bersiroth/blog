@@ -60,7 +60,7 @@ class Article
     /**
      * @ORM\ManyToOne(targetEntity="Bersi\BlogBundle\Entity\Category", cascade={"persist"})
      */
-    private $categories;
+    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="Bersi\BlogBundle\Entity\Author", cascade={"persist"})
@@ -68,7 +68,8 @@ class Article
     private $author;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Bersi\BlogBundle\Entity\Tag", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Bersi\BlogBundle\Entity\Tag", cascade={"persist"}, inversedBy="articles")
+     * @ORM\JoinTable(name="article_tag")
      */
     private $tags;
 
@@ -207,12 +208,12 @@ class Article
     /**
      * Set categories
      *
-     * @param \Bersi\BlogBundle\Entity\Category $categories
+     * @param \Bersi\BlogBundle\Entity\Category $category
      * @return Article
      */
-    public function setCategories(\Bersi\BlogBundle\Entity\Category $categories = null)
+    public function setCategory(\Bersi\BlogBundle\Entity\Category $category = null)
     {
-        $this->categories = $categories;
+        $this->category = $category;
 
         return $this;
     }
@@ -222,9 +223,9 @@ class Article
      *
      * @return \Bersi\BlogBundle\Entity\Category 
      */
-    public function getCategories()
+    public function getCategory()
     {
-        return $this->categories;
+        return $this->category;
     }
 
     /**
@@ -250,36 +251,4 @@ class Article
         return $this->author;
     }
 
-    /**
-     * Add tags
-     *
-     * @param \Bersi\BlogBundle\Entity\Author $tags
-     * @return Article
-     */
-    public function addTag(\Bersi\BlogBundle\Entity\Author $tags)
-    {
-        $this->tags[] = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Remove tags
-     *
-     * @param \Bersi\BlogBundle\Entity\Author $tags
-     */
-    public function removeTag(\Bersi\BlogBundle\Entity\Author $tags)
-    {
-        $this->tags->removeElement($tags);
-    }
-
-    /**
-     * Get tags
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getTags()
-    {
-        return $this->tags;
-    }
 }

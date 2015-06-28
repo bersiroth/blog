@@ -102,7 +102,30 @@ class DefaultController extends Controller
             $em->persist($article);
             $em->flush();
             return new JsonResponse(array('id' => $id));
-//            return new Response();
+        };
+    }
+
+    /**
+     * @Route("/admin/upload", name="admin_bersi_blog_upload")
+     */
+    public function uploadAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $file = $request->files->get('file');
+//            var_dump($file);
+            if ($file !== null) {
+                $extension = $file->guessExtension();
+                if (!$extension) $extension = 'bin';
+                $goodExtension = ['jpeg', 'png', 'gif'];
+                if (in_array($extension, $goodExtension)) {
+                    $path = realpath(__DIR__ . '/../../../../../web/images/articles/');
+                    $file->move($path, $file->getClientOriginalName());
+                }
+            }
+            $array = array(
+                'filelink' => '/images/articles/'.$file->getClientOriginalName()
+            );
+            return new JsonResponse($array);
         };
     }
 }

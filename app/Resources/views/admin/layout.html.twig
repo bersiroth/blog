@@ -8,10 +8,11 @@
 
     <title>{% block title %}Blog de bersiroth{% endblock %}</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.css">
 
-    <link rel="stylesheet" href="/generale.css">
+    <link rel="stylesheet" href="/css/generale.css">
+    <link rel="stylesheet" href="/js/redactor/redactor.css">
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,800,400' rel='stylesheet' type='text/css'>
 
@@ -51,6 +52,7 @@
                             <li><a href="">Categories</a></li>
                             <li><a href="">Images</a></li>
                             <li><a href="">Videos</a></li>
+                            <li><a href="{{ path('bersi_blog_article') }}">Site</a></li>
                         </ul>
                         <form class="navbar-form navbar-right" role="search">
                             <div class="form-group">
@@ -62,7 +64,7 @@
                 </div>
             </nav>
             {% for flashMessage in app.session.flashbag.get('success') %}
-                <div class="alert alert-warning alert-dismissible" role="alert">
+                <div class="alert alert-success alert-dismissible" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
                     {{ flashMessage }}
@@ -120,10 +122,14 @@
 </div>
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/redactor/redactor.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#chatTwitch').css("height", $('#videoTwitch').css("height"));
+            $('.redactor').redactor({
+                    imageUpload: '/app_dev.php/admin/upload'
+            });
         });
     </script>
 {% endblock %}

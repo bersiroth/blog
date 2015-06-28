@@ -54,6 +54,7 @@
                                 <li {% if cat == 'high-tech' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'high-tech'}) }}">High Tech</a></li>
                                 <li {% if cat == 'mangas' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'mangas'}) }}">Mangas</a></li>
                                 <li><a href="#">Contact</a></li>
+                                <li><a href="{{ path('admin_bersi_blog') }}">Admin</a></li>
                             </ul>
                             <form class="navbar-form navbar-right" role="search">
                                 <div class="form-group">

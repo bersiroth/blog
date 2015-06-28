@@ -1,6 +1,6 @@
 <h3>Formulaire news</h3>
 
-<div class="well col-md-8">
+<div class="well">
     {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
     {{ form_errors(form) }}
     <div class="form-group">
@@ -25,10 +25,10 @@
         </div>
     </div>
     <div class="form-group">
-        {{ form_label(form.content, "Contenu", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
+        {{ form_label(form.content, "Contenu", {'label_attr': {'class': 'col-sm-3'}}) }}
         {{ form_errors(form.title) }}
         <div class="col-sm-9">
-            {{ form_widget(form.content, {'attr': {'class': 'form-control'}}) }}
+            {{ form_widget(form.content, {'attr': {'class': 'form-control redactor'}}) }}
         </div>
     </div>
     <div class="form-group">
@@ -48,7 +48,6 @@
     {% if image != false %}
         <div class="form-group">
             <label class="col-sm-3 control-label">Image actuelle</label>
-
             <div class="col-sm-9">
                 <img src="{{ image }}" class="img-responsive" alt="Responsive image"/>
             </div>
@@ -68,7 +67,10 @@
             {{ form_widget(form.published) }}
         </div>
     </div>
-    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+    {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary pull-left' }}) }}
+    <a href="{{ path('admin_bersi_blog_articles') }}" class="btn btn-primary pull-right" role="button">Retour</a>
     {{ form_rest(form) }}
     {{ form_end(form) }}
+    <br/>
+    <br/>
 </div>

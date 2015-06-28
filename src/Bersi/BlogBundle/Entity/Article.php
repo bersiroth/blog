@@ -68,7 +68,7 @@ class Article
     private $author;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Bersi\BlogBundle\Entity\Tag", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Bersi\BlogBundle\Entity\Tag", cascade={"persist"}, inversedBy="articles")
      */
     private $tags;
 
@@ -250,13 +250,14 @@ class Article
         return $this->author;
     }
 
+
     /**
      * Add tags
      *
-     * @param \Bersi\BlogBundle\Entity\Author $tags
+     * @param \Bersi\BlogBundle\Entity\Tag $tags
      * @return Article
      */
-    public function addTag(\Bersi\BlogBundle\Entity\Author $tags)
+    public function addTag(\Bersi\BlogBundle\Entity\Tag $tags)
     {
         $this->tags[] = $tags;
 
@@ -266,9 +267,9 @@ class Article
     /**
      * Remove tags
      *
-     * @param \Bersi\BlogBundle\Entity\Author $tags
+     * @param \Bersi\BlogBundle\Entity\Tag $tags
      */
-    public function removeTag(\Bersi\BlogBundle\Entity\Author $tags)
+    public function removeTag(\Bersi\BlogBundle\Entity\Tag $tags)
     {
         $this->tags->removeElement($tags);
     }

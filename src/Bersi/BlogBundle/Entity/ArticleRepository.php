@@ -20,9 +20,37 @@ class ArticleRepository extends EntityRepository
             ->addSelect('c')
             ->where('a.published = :publish')
             ->setParameter('publish', true)
-            ->andWhere($qb->expr()->in('c.name', $categoryNames));
+            ->andWhere($qb->expr()->in('c.name', $categoryNames))
+            ->orderBy('a.date', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
 
+    public function getArticlesBy($fieldName, $value)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb ->where('a.published = :publish')
+            ->setParameter('publish', true)
+            ->andWhere("a.$fieldName = :$fieldName")
+            ->setParameter($fieldName, $value)
+            ->orderBy('a.date', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getArticlesByTag(array $tagNames)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb ->join('a.id', 'article_tag')
+            ->join('article_tag', 'c')
+            ->addSelect('c')
+            ->where('a.published = :publish')
+            ->setParameter('publish', true)
+            ->andWhere($qb->expr()->in('c.name', $tagNames))
+            ->orderBy('a.date', 'DESC');
+        $qb->getQuery()->getSQL();die;
+        return $qb->getQuery()->getResult();
+    }
 }
