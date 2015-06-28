@@ -19,7 +19,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render(':admin:layout.html.twig');
+        return $this->render(':Admin:layout.html.twig');
     }
 
     /**
@@ -28,7 +28,7 @@ class DefaultController extends Controller
     public function articleAction()
     {
         $articles = $this->getDoctrine()->getRepository('BersiBlogBundle:Article')->findAll();
-        return $this->render('BersiBlogBundle:admin:article.html.twig', array(
+        return $this->render('BersiBlogBundle:Admin:article.html.twig', array(
             'liste_articles' => $articles,
         ));
     }
@@ -78,12 +78,12 @@ class DefaultController extends Controller
                 $goodExtension = ['jpeg', 'png', 'gif'];
                 if (in_array($extension, $goodExtension)) {
                     $path = realpath(__DIR__ . '/../../../../../web/images/' . $article->getCategory()->getName() . '/');
-                    $file->move($path, $article->getSlug() . '.' . $extension);
+                    $file->move($path, $article->getSlug() . '.jpeg');
                 }
             }
             return $this->redirect($this->generateUrl('admin_bersi_blog_articles'));
         }
-        return $this->render('BersiBlogBundle:admin:addArticle.html.twig', array(
+        return $this->render('BersiBlogBundle:Admin:addArticle.html.twig', array(
             'form' => $form->createView(),
             'image' => $image,
         ));
