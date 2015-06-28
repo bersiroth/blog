@@ -30,11 +30,12 @@ class DefaultController extends Controller
     /**
      * @Route("/menu", name="bersi_blog_menu")
      */
-    public function menuAction()
+    public function menuAction($category)
     {
         $categories = $this->getDoctrine()->getRepository('BersiBlogBundle:Category')->findAll();
         return $this->render('BersiBlogBundle:Default:menu.html.twig', array(
-            'menus' => $categories
+            'menus' => $categories,
+            'category' => $category
         ));
     }
 

@@ -32,7 +32,7 @@
         {% endblock %}
     </header>
     {% block menu %}
-        {{ render(controller("BersiBlogBundle:Default:menu")) }}
+        {{ render(controller("BersiBlogBundle:Default:menu", { 'category': app.request.attributes.get('category')})) }}
     {% endblock %}
     {{ render(controller("BersiBlogBundle:Default:twitch")) }}
     <div class="row">

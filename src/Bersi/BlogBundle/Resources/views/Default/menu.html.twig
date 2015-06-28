@@ -12,10 +12,9 @@
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                {% set cat = app.request.attributes.get('category') %}
-                <li {% if cat == '' %}class="active"{% endif %} ><a href="{{ path('bersi_blog_article') }}">Home</a></li>
+                <li {% if category == '' %}class="active"{% endif %} ><a href="{{ path('bersi_blog_article') }}">Home</a></li>
                 {% for menu in menus %}
-                    <li {% if cat == menu.name %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': menu.name}) }}">{{ menu.name }}</a></li>
+                    <li {% if category == menu.name %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': menu.name}) }}">{{ menu.name }}</a></li>
                 {% endfor %}
                 <li><a href="#">Contact</a></li>
                 <li><a href="{{ path('admin_bersi_blog') }}">Admin</a></li>
