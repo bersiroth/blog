@@ -18,13 +18,17 @@ body {
     border-color: #080808;
 }
 
-.inverse-dropdown>li>a{
+.inverse-dropdown li a{
       color: #999;
 }
 
-.inverse-dropdown>li>a:hover{
+.inverse-dropdown li a:hover, .inverse-dropdown > li > a:focus{
      color: #fff;
-     background-color: black;
+    background: none;
+}
+
+.inverse-dropdown .active a, .inverse-dropdown .active a:hover {
+    background: black none;
 }
 
 .date-article {

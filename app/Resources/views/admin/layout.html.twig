@@ -31,6 +31,7 @@
                     <h1>Admin blog bersiroth</h1>
                 </div>
             </header>
+            {% set route = app.request.attributes.get('_route') %}
             <nav class="navbar navbar-default">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
@@ -41,29 +42,32 @@
                         <span class="icon-bar"></span>
                     </button>
                 </div>
-                <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ path('bersi_blog_article') }}">Accueil</a></li>
-                        <li><a href="{{ path('admin_bersi_blog_articles') }}">Articles</a></li>
-                        <li><a href="{{ path('admin_bersi_blog_articles') }}">Auteurs</a></li>
-                        <li><a href="{{ path('admin_bersi_blog_articles') }}">Categories</a></li>
-                        <li><a href="{{ path('bersi_blog_article') }}">Images</a></li>
-                        <li><a href="{{ path('bersi_blog_article') }}">Videos</a></li>
-                    </ul>
-                    <form class="navbar-form navbar-right" role="search">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Rechercher">
-                        </div>
-                        <button type="submit" class="btn btn-default">Valider</button>
-                    </form>
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li {% if route == 'admin_bersi_blog' %}class="active"{% endif %} ><a href="{{ path('admin_bersi_blog') }}">Accueil</a></li>
+                            <li {% if route == 'admin_bersi_blog_articles' %}class="active"{% endif %}><a href="{{ path('admin_bersi_blog_articles') }}">Articles</a></li>
+                            <li><a href="">Auteurs</a></li>
+                            <li><a href="">Categories</a></li>
+                            <li><a href="">Images</a></li>
+                            <li><a href="">Videos</a></li>
+                        </ul>
+                        <form class="navbar-form navbar-right" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Rechercher">
+                            </div>
+                            <button type="submit" class="btn btn-default">Valider</button>
+                        </form>
+                    </div>
                 </div>
             </nav>
-                {% for flashMessage in app.session.flashbag.get('success') %}
-                    <div class="alert alert-warning alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        {{ flashMessage }}
-                    </div>
-                {% endfor %}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    {{ flashMessage }}
+                </div>
+            {% endfor %}
             {% block body %}
                 <div class="row">
                     <div class="col-sm-4">

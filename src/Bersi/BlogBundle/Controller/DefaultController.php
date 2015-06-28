@@ -20,10 +20,15 @@ class DefaultController extends Controller
     public function articleAction($slug = null, $category = null)
     {
         $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Article');
-        $articles = $slug === null ? $repository->findAll() : $repository->findBySlug($slug);
-//        var_dump($articles[0]);die;
-        $moisFR = array(1=>'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
-        foreach($articles as $key => $value){
+        if ($slug !== null) {
+            $articles = $repository->findBy(array('slug' => $slug),array('published' => true));
+        } elseif($category !== null){
+            $articles = $repository->getArticlesByCategory([$category]);
+        } else {
+            $articles = $repository->findBy(array('published' => true));
+        }
+        $moisFR = array(1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+        foreach ($articles as $key => $value) {
             $articles[$key]->mois = $moisFR[$value->getDate()->format('n')];
         }
         return $this->render('BersiBlogBundle::layout.html.twig',

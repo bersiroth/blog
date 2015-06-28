@@ -12,4 +12,17 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
+    public function getArticlesByCategory(array $categoryNames)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb ->join('a.category', 'c')
+            ->addSelect('c')
+            ->where('a.published = :publish')
+            ->setParameter('publish', true)
+            ->andWhere($qb->expr()->in('c.name', $categoryNames));
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

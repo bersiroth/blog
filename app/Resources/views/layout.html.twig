@@ -8,10 +8,10 @@
 
         <title>{% block title %}Blog de bersiroth{% endblock %}</title>
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.css">
 
-        <link rel="stylesheet" href="/generale.css">
+        <link rel="stylesheet" href="/css/generale.css">
 
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:700,800,400' rel='stylesheet' type='text/css'>
 
@@ -25,10 +25,11 @@
     <body>
         <div class="container">
             <header>
-                {% block header %}<a href="/"><img src="/images/blog-bersiroth2.jpg" class="img-responsive" alt="Responsive image"/></a>{% endblock %}
+                {% block header %}<a href="{{ path('bersi_blog_article') }}"><img src="/images/blog-bersiroth2.jpg" class="img-responsive" alt="Responsive image"/></a>{% endblock %}
             </header>
             {% block menu %}
-                <nav class="navbar navbar-inverse">
+                {% set cat = app.request.attributes.get('category') %}
+                <nav id="main" class="navbar navbar-inverse">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
@@ -40,18 +41,18 @@
                     <div class="container-fluid">
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <li><a href="#">Videos</a></li>
-                                <li class="dropdown">
+                                <li {% if cat == 'video' or cat == ''  %}class="active"{% endif %} ><a href="{{ path('bersi_blog_article', { 'category': 'video'}) }}">Videos</a></li>
+                                <li {% if cat == 'jeux-video' or cat == 'test' or cat == 'astuce' or cat == 'trophee' %}class="active"{% endif %} class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jeux video<span class="caret"></span></a>
-                                    <ul class="dropdown-menu inverse-dropdown">
-                                        <li><a href="#">Tests</a></li>
-                                        <li><a href="#">Astuces</a></li>
-                                        <li><a href="#">Trophees</a></li>
-                                        <li><a href="#">News</a></li>
+                                    <ul class="inverse-dropdown dropdown-menu">
+                                        <li {% if cat == 'test' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'test'}) }}">Tests</a></li>
+                                        <li {% if cat == 'astuce' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'astuce'}) }}">Astuces</a></li>
+                                        <li {% if cat == 'trophee' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'trophee'}) }}">Trophees</a></li>
+                                        <li {% if cat == 'jeux-video' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'jeux-video'}) }}">News</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">High Tech</a></li>
-                                <li><a href="#">Mangas</a></li>
+                                <li {% if cat == 'high-tech' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'high-tech'}) }}">High Tech</a></li>
+                                <li {% if cat == 'mangas' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'mangas'}) }}">Mangas</a></li>
                                 <li><a href="#">Contact</a></li>
                             </ul>
                             <form class="navbar-form navbar-right" role="search">
@@ -144,7 +145,7 @@
         </div>
         {% block javascripts %}
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+            <script src="/js/bootstrap.js"></script>
             <script>
                 $(document).ready(function () {
                     $('#chatTwitch').css( "height" ,$('#videoTwitch').css( "height" ));
