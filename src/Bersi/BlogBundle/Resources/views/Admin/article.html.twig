@@ -1,7 +1,7 @@
 {% extends ":Admin:layout.html.twig" %}
 
 {% block body %}
-    <a href="{{ path('admin_bersi_blog_add_articles') }}" class="btn btn-primary pull-right" role="button">Ajouter</a>
+    <a href="{{ path('admin_bersi_blog_add_article') }}" class="btn btn-primary pull-right" role="button">Ajouter</a>
     <br>
     <br>
     <br>
@@ -25,7 +25,7 @@
             {% endif %}
             <tr>
                 <td>{{ article.date|date('d-m-Y') }}</td>
-                <td><a href="{{ path('admin_bersi_blog_edit_articles', { 'id': article.id}) }}">{{ article.title }}</a></td>
+                <td><a href="{{ path('admin_bersi_blog_edit_article', { 'id': article.id}) }}">{{ article.title }}</a></td>
                 <td>{{ article.author.pseudo }}</td>
                 {#<td>{{ article.image }}</td>#}
                 {#<td>{{ article.content }}</td>#}
@@ -33,12 +33,12 @@
                 <td>{% for tag in article.tags %}{{ tag.name }}, {% endfor %}</td>
                 <td>
                     {% if article.published == true %}
-                        <button href="{{ path('admin_bersi_blog_publish_articles', { 'id': article.id}) }}"
+                        <button href="{{ path('admin_bersi_blog_publish_article', { 'id': article.id}) }}"
                                 id="publication-{{ article.id }}" class="btn btn-success publication btn-xs" role="button">
                             <span class="glyphicon glyphicon glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
                         </button>
                     {% else %}
-                        <button href="{{ path('admin_bersi_blog_publish_articles', { 'id': article.id}) }}"
+                        <button href="{{ path('admin_bersi_blog_publish_article', { 'id': article.id}) }}"
                                 id="publication-{{ article.id }}" class="btn btn-danger publication btn-xs" role="button">
                             <span class="glyphicon glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                         </button>

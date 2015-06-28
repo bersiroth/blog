@@ -16,4 +16,19 @@ class DefaultController extends Controller
         return $this->render(':Admin:layout.html.twig');
     }
 
+    /**
+     * @Route("/admin/menu", name="admin_bersi_blog_menu")
+     */
+    public function menuAction()
+    {
+        $entities = array();
+        $meta = $this->getDoctrine()->getManager()->getMetadataFactory()->getAllMetadata();
+        foreach ($meta as $m) {
+            $entities[] = substr(strrchr($m->name, '\\'), 1);
+        }
+        return $this->render('BersiBlogBundle:Admin:menu.html.twig', array(
+            'menus' => $entities
+        ));
+    }
+
 }

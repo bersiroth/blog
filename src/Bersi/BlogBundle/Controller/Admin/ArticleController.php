@@ -13,7 +13,7 @@ class ArticleController extends Controller
 {
 
     /**
-     * @Route("/admin/article", name="admin_bersi_blog_articles")
+     * @Route("/admin/article", name="admin_bersi_blog_article")
      */
     public function articleAction()
     {
@@ -24,8 +24,8 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/admin/article/edit/{id}", name="admin_bersi_blog_edit_articles")
-     * @Route("/admin/article/add", name="admin_bersi_blog_add_articles")
+     * @Route("/admin/article/edit/{id}", name="admin_bersi_blog_edit_article")
+     * @Route("/admin/article/add", name="admin_bersi_blog_add_article")
      */
     public function addArticleAction($id = null, Request $request)
     {
@@ -71,7 +71,7 @@ class ArticleController extends Controller
                     $file->move($path, $article->getSlug() . '.jpeg');
                 }
             }
-            return $this->redirect($this->generateUrl('admin_bersi_blog_articles'));
+            return $this->redirect($this->generateUrl('admin_bersi_blog_article'));
         }
         return $this->render('BersiBlogBundle:Admin:addArticle.html.twig', array(
             'form' => $form->createView(),
@@ -80,7 +80,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/admin/article/publish/{id}", name="admin_bersi_blog_publish_articles")
+     * @Route("/admin/article/publish/{id}", name="admin_bersi_blog_publish_article")
      */
     public function publishAction($id, Request $request)
     {
