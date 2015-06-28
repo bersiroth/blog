@@ -41,7 +41,7 @@
                     <div class="container-fluid">
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <li {% if cat == 'video' %}class="active"{% endif %} ><a href="{{ path('bersi_blog_article', { 'category': 'video'}) }}">Videos</a></li>
+                                <li {% if cat == '' %}class="active"{% endif %} ><a href="{{ path('bersi_blog_article') }}">Home</a></li>
                                 <li {% if cat == 'jeux-video' or cat == 'test' or cat == 'astuce' or cat == 'trophee' %}class="active"{% endif %} class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Jeux video<span class="caret"></span></a>
                                     <ul class="inverse-dropdown dropdown-menu">
@@ -51,6 +51,7 @@
                                         <li {% if cat == 'jeux-video' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'jeux-video'}) }}">News</a></li>
                                     </ul>
                                 </li>
+                                <li {% if cat == 'video' %}class="active"{% endif %} ><a href="{{ path('bersi_blog_article', { 'category': 'video'}) }}">Videos</a></li>
                                 <li {% if cat == 'high-tech' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'high-tech'}) }}">High Tech</a></li>
                                 <li {% if cat == 'mangas' %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': 'mangas'}) }}">Mangas</a></li>
                                 <li><a href="#">Contact</a></li>
