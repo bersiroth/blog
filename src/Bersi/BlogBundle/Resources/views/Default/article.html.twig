@@ -16,14 +16,19 @@
         <a href="{{ path('bersi_blog_article', { 'slug': article.slug, 'category': article.category.name }) }}"><img
                     src="\images\{{ article.category.name }}\{{ article.slug }}.jpeg" class="img-responsive"
                     alt="Responsive image"/></a>
-        <p>
-            {{ article.content|truncate(250, true)|raw }}
-        </p>
+
         {% if list_articles|length > 1 %}
+            <p>
+                {{ article.content|truncate(175, true)|raw }}
+            </p>
             <div style="color : #3a8ac9;font-weight: bold;"><a
                         href="{{ path('bersi_blog_article', { 'slug': article.slug, 'category': article.category.name }) }}">Lire
                     la suite</a></div>
             <br>
+        {% else %}
+            <p>
+                {{ article.content|raw }}
+            </p>
         {% endif %}
         <div class="pull-left" style="color: rgb(2, 34, 93);font-weight: bold;">Tags :&nbsp;</div>
         <div>
