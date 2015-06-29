@@ -5,6 +5,7 @@ namespace Bersi\BlogBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GuzzleHttp\Client;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends Controller
 {
@@ -58,16 +59,26 @@ class ArticleController extends Controller
      * @param string $category
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function articleAction($slug = null, $category = null)
+    public function articleAction(Request $request, $slug = null, $category = null)
     {
+        $page = $request->get('page',1);
+//        var_dump($page);die;
+//        $page = 1;
+        $nbPerPage = 5;
         $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Article');
         if ($slug !== null) {
             $articles = $repository->getArticlesBy('slug', $slug);
         } elseif($category !== null){
             $articles = $repository->getArticlesByCategory([$category]);
         } else {
-            $articles = $repository->findBy(array('published' => true),array('date' => 'desc'));
+            $articles = $repository->findBy(
+                array('published' => true),
+                array('date' => 'desc'),
+                $nbPerPage,
+                ($page-1)*5);
         }
+//        echo $nbPerPage . '     ' . $page . '        ';
+//        var_dump($articles);die;
         return $this->afficherArticle($articles);
     }
 

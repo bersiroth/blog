@@ -41,7 +41,7 @@
         <h1>Pas (encore !) d'article</h1>
     {% endfor %}
 
-    {% if list_articles|length > 10 %}
+    {% if list_articles|length > 4 %}
         <nav class="text-center">
             <ul class="pagination">
                 <li>
@@ -49,11 +49,11 @@
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="active"><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+                <li class="active"><a href="?page=1">1</a></li>
+                <li><a href="?page=2">2</a></li>
+                <li><a href="?page=3">3</a></li>
+                <li><a href="?page=4">4</a></li>
+                <li><a href="?page=5">5</a></li>
                 <li>
                     <a href="#" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
