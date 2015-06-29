@@ -26,7 +26,8 @@
             <br>
         {% endif %}
         <div class="pull-left" style="color: rgb(2, 34, 93);font-weight: bold;">Tags :&nbsp;</div>
-        <div>{% for tag in article.tags %}<a
+        <div>
+            {% for tag in article.tags %}<a
                 href="{{ path('bersi_blog_tag', {'tag': tag.name}) }}">{{ tag.name }}</a>{% if loop.last == false %},{% endif %}
             {% endfor %}
         </div>

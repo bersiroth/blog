@@ -14,8 +14,6 @@
                 <th>Date</th>
                 <th>Titre</th>
                 <th>Auteur</th>
-                {#<th>image</th>#}
-                {#<th>Contenu</th>#}
                 <th>Categorie</th>
                 <th>Tag</th>
                 <th>Publier</th>
@@ -27,10 +25,12 @@
                 <td>{{ article.date|date('d-m-Y') }}</td>
                 <td><a href="{{ path('admin_bersi_blog_edit_article', { 'id': article.id}) }}">{{ article.title }}</a></td>
                 <td>{{ article.author.pseudo }}</td>
-                {#<td>{{ article.image }}</td>#}
-                {#<td>{{ article.content }}</td>#}
                 <td>{{ article.category.name }}</td>
-                <td>{% for tag in article.tags %}{{ tag.name }}, {% endfor %}</td>
+                <td>
+                {% for tag in article.tags %}
+                    {{ tag.name }}{% if loop.last == false %},{% endif %}
+                {% endfor %}
+                </td>
                 <td>
                     {% if article.published == true %}
                         <button href="{{ path('admin_bersi_blog_publish_article', { 'id': article.id}) }}"
