@@ -85,3 +85,7 @@ body {
 hr{
     border-top: 2px solid rgb(2, 34, 93);
 }
+
+.col-sm-9 .redactor-box {
+    margin-bottom: 0px;
+}

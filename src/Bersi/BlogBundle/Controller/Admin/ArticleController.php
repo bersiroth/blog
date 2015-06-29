@@ -31,7 +31,11 @@ class ArticleController extends Controller
     {
         $article = $id === null ? new Article() : $this->getDoctrine()->getRepository('BersiBlogBundle:Article')->find($id);
         $form = $this->get('form.factory')->createBuilder('form', $article)
-            ->add('date', 'date')
+            ->add('date', 'date', [
+                'input' => 'datetime',
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy HH:mm',
+            ])
             ->add('title', 'text')
             ->add('image', 'file', array('mapped' => false, 'required' => false))
             ->add('content', 'textarea')
@@ -54,6 +58,7 @@ class ArticleController extends Controller
             $image = '/images/' . $article->getCategory()->getName() . '/' . $article->getSlug() . '.jpeg';
         }
         if ($form->isValid()) {
+//            var_dump($article);die;
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
@@ -112,7 +117,7 @@ class ArticleController extends Controller
                 }
             }
             $array = array(
-                'filelink' => '/images/articles/'.$file->getClientOriginalName()
+                'filelink' => '/images/articles/' . $file->getClientOriginalName()
             );
             return new JsonResponse($array);
         };
