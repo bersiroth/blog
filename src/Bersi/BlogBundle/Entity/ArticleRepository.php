@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
-    public function getArticlesByCategory(array $categoryNames)
+    public function getArticlesByCategory(array $categoryNames, $start, $nbArticle)
     {
         $qb = $this->createQueryBuilder('a');
 
@@ -21,6 +21,8 @@ class ArticleRepository extends EntityRepository
             ->where('a.published = :publish')
             ->setParameter('publish', true)
             ->andWhere($qb->expr()->in('c.name', $categoryNames))
+            ->setMaxResults($nbArticle)
+            ->setFirstResult($start)
             ->orderBy('a.date', 'DESC');
 
         return $qb->getQuery()->getResult();
@@ -39,18 +41,23 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function getArticlesByTag(array $tagNames)
+    public function getAllArticlesPublish($categoryNames = null)
     {
         $qb = $this->createQueryBuilder('a');
 
-        $qb ->join('a.id', 'article_tag')
-            ->join('article_tag', 'c')
-            ->addSelect('c')
-            ->where('a.published = :publish')
-            ->setParameter('publish', true)
-            ->andWhere($qb->expr()->in('c.name', $tagNames))
-            ->orderBy('a.date', 'DESC');
-        $qb->getQuery()->getSQL();die;
-        return $qb->getQuery()->getResult();
+        if ($categoryNames == null){
+            $qb ->select('count(a.id)')
+                ->where('a.published = :publish')
+                ->setParameter('publish', true);
+        } else {
+            $qb ->select('count(a.id)')
+                ->join('a.category', 'c')
+                ->where('a.published = :publish')
+                ->setParameter('publish', true)
+                ->andWhere($qb->expr()->in('c.name', $categoryNames));
+        }
+
+        return $qb->getQuery()->getResult()[0][1];
     }
+
 }

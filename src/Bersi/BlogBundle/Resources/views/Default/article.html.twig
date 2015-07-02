@@ -41,24 +41,26 @@
         <h1>Pas (encore !) d'article</h1>
     {% endfor %}
 
-    {% if list_articles|length > 4 %}
+    {% if pagination is defined and pagination.nbPage != 1 %}
         <nav class="text-center">
             <ul class="pagination">
+                {% if pagination.page != 1 %}
                 <li>
-                    <a href="#" aria-label="Previous">
+                    <a href="?page={{ pagination.page - 1 }}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li class="active"><a href="?page=1">1</a></li>
-                <li><a href="?page=2">2</a></li>
-                <li><a href="?page=3">3</a></li>
-                <li><a href="?page=4">4</a></li>
-                <li><a href="?page=5">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
+                {% endif %}
+                {% for page in 1..pagination.nbPage %}
+                    <li {% if page == pagination.page %}class="active"{% endif %} ><a href="?page={{ page }}">{{ page }}</a></li>
+                {% endfor %}
+                {% if pagination.page != pagination.nbPage %}
+                    <li>
+                        <a href="?page={{ pagination.page + 1 }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
     {% endif %}
