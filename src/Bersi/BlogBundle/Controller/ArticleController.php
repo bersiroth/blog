@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends Controller
 {
-    private $nbPerPage = 2;
+    private $nbPerPage = 8;
 
     private function afficherArticle($articles, $pagination = null)
     {
