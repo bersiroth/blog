@@ -40,6 +40,13 @@ class Article
     /**
      * @var string
      *
+     * @ORM\Column(name="introduction", type="string", length=255)
+     */
+    private $introduction;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="content", type="text")
      */
     private $content;
@@ -282,5 +289,28 @@ class Article
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set introduction
+     *
+     * @param string $introduction
+     * @return Article
+     */
+    public function setIntroduction($introduction)
+    {
+        $this->introduction = $introduction;
+
+        return $this;
+    }
+
+    /**
+     * Get introduction
+     *
+     * @return string 
+     */
+    public function getIntroduction()
+    {
+        return $this->introduction;
     }
 }

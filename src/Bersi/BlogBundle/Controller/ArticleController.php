@@ -31,7 +31,7 @@ class ArticleController extends Controller
         $result = [];
         if ($tag !== null) {
             $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Tag');
-            $tags = $repository->findoneBy(array('name' => $tag));
+            $tags = $repository->findOneBy(array('name' => $tag));
             $articles = $tags->getArticles();
             foreach ($articles->getValues() as $article) {
                 if ($article->getPublished()) $result[] = $article;
@@ -60,8 +60,7 @@ class ArticleController extends Controller
         $res = $client->get('https://api.twitch.tv/kraken/streams/' . $channel, ['verify' => false]);
         $res = json_decode($res->getBody());
         $live = $res->stream === null ? false : true;
-        return $this->render('BersiBlogBundle:Default:twitch.html.twig',
-            [
+        return $this->render('BersiBlogBundle:Default:twitch.html.twig', [
                 'is_live' => $live,
                 'channel' => $channel,
             ]
@@ -82,7 +81,8 @@ class ArticleController extends Controller
         $nbPerPage = $this->nbPerPage;
         $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Article');
         if ($slug !== null) {
-            $articles = $repository->getArticlesBy('slug', $slug);
+            $articles = $repository->findBy(
+                array('published' => true, 'slug' => $slug));
         } elseif ($category !== null) {
             $nbTotalArticles = $repository->getAllArticlesPublish([$category]);
             $articles = $repository->getArticlesByCategory([$category], ($page - 1) * $nbPerPage, $nbPerPage);

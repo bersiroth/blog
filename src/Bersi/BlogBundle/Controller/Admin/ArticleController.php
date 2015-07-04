@@ -37,6 +37,7 @@ class ArticleController extends Controller
                 'format' => 'dd/MM/yyyy HH:mm',
             ])
             ->add('title', 'text')
+            ->add('introduction', 'text')
             ->add('image', 'file', array('mapped' => false, 'required' => false))
             ->add('content', 'textarea')
             ->add('published', 'checkbox', array('required' => false))

@@ -14,15 +14,20 @@ class DefaultController extends Controller
      */
     public function twitchAction()
     {
-        $channel = "bersiroth";
+        $channels = ['bersiroth', 'akosy', 'nikorasu'];
         $client = new Client();
-        $res = $client->get('https://api.twitch.tv/kraken/streams/' . $channel, ['verify' => false]);
-        $res = json_decode($res->getBody());
-        $live = $res->stream === null ? false : true;
+        foreach($channels as $channel) {
+            $channelName = $channel;
+            $res = $client->get('https://api.twitch.tv/kraken/streams/' . $channel, ['verify' => false]);
+            $res = json_decode($res->getBody());
+            $live = $res->stream === null ? false : true;
+            if ($live)break;
+        }
         return $this->render('BersiBlogBundle:Default:twitch.html.twig',
             [
                 'is_live' => $live,
                 'channel' => $channel,
+                'channelName' => $channelName,
             ]
         );
     }

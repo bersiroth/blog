@@ -19,13 +19,16 @@
 
         {% if list_articles|length > 1 %}
             <p>
-                {{ article.content|truncate(175, true)|raw }}
+                {{ article.introduction|raw }}
             </p>
             <div style="color : #3a8ac9;font-weight: bold;"><a
                         href="{{ path('bersi_blog_article', { 'slug': article.slug, 'category': article.category.name }) }}">Lire
                     la suite</a></div>
             <br>
         {% else %}
+            <p>
+                {{ article.introduction|raw }}
+            </p>
             <p>
                 {{ article.content|raw }}
             </p>
