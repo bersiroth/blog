@@ -1,13 +1,33 @@
-{% if is_live %}
-    <div class="row">{{ channelName }}</div>
+{% if lives|length > 0  %}
+    {#<div class="row">#}
+        {#<div class="col-xs-12">#}
+            {#{{ lives[0] }}#}
+        {#</div>#}
+    {#</div>#}
     <div class="row">
         <div class="col-xs-12 col-sm-7 col-md-8" id="videoTwitch">
-            <div class="embed-responsive embed-responsive-16by9">
-                <iframe src="http://www.twitch.tv/{{ channel }}/embed"></iframe>
+            <div class="panel" id="panelVideoTwitch">
+            {{ lives[0] }}
+            <div class="embed-responsive embed-responsive-16by9" id="selectVideoStream">
+                <iframe src="http://www.twitch.tv/{{ lives[0] }}/embed"></iframe>
+            </div>
+            {% if lives|length > 1  %}
+                <form class="form-horizontal" id="formSelectStream">
+                        <label class="col-sm-4 control-label">Changer le stream : </label>
+                        <div class="col-sm-4">
+                            <select id="selectStream" class="form-control">
+                                {% for live in lives %}
+                                    <option value="{{ live }}">{{ live }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                </form>
+                <div class="clearfix"></div>
+            {% endif %}
             </div>
         </div>
-        <div class="col-sm-5 col-md-4 hidden-xs">
-            <iframe src="http://www.twitch.tv/{{ channel }}/chat?popout=" id="chatTwitch" width="100%"></iframe>
+        <div class="col-sm-5 col-md-4 hidden-xs" id="selectTchatStream">
+            <iframe src="http://www.twitch.tv/{{ lives[0] }}/chat?popout=" id="chatTwitch" width="100%"></iframe>
         </div>
     </div>
     <br>

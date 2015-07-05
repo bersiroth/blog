@@ -51,24 +51,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * @Route("/twitch", name="bersi_blog_twitch")
-     */
-    public function twitchAction()
-    {
-        $channel = "bersiroth";
-        $client = new Client();
-        $res = $client->get('https://api.twitch.tv/kraken/streams/' . $channel, ['verify' => false]);
-        $res = json_decode($res->getBody());
-        $live = $res->stream === null ? false : true;
-        return $this->render('BersiBlogBundle:Default:twitch.html.twig', [
-                'is_live' => $live,
-                'channel' => $channel,
-            ]
-        );
-    }
-
-
-    /**
      * @Route("/{category}/{slug}", name="bersi_blog_article")
      * @Route("/", name="home_page")
      * @param string $slug
