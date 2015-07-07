@@ -59,7 +59,6 @@ class ArticleController extends Controller
             $image = '/images/' . $article->getCategory()->getName() . '/' . $article->getSlug() . '.jpeg';
         }
         if ($form->isValid()) {
-//            var_dump($article);die;
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();

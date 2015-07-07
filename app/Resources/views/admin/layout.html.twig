@@ -107,8 +107,12 @@
                 locale: 'fr'
             });
             $('.redactor').redactor({
-                    imageUpload: '/app_dev.php/admin/upload',
-                    minHeight: 300 // pixels
+                imageUploadCallback: function(image, json)
+                {
+                    image.addClass('img-responsive');
+                },
+                imageUpload: '/app_dev.php/admin/upload',
+                minHeight: 300 // pixels
             });
         });
     </script>
