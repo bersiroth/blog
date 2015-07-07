@@ -107,3 +107,7 @@ hr{
 .col-sm-9 .redactor-box {
     margin-bottom: 0px;
 }
+
+#redactor-image-manager-box img {
+    margin: 5px;
+}

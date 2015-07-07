@@ -100,6 +100,10 @@
     <script src="/js/bootstrap.js"></script>
     <script src="/js/bootstrap-datetimepicker.js"></script>
     <script src="/js/redactor/redactor.min.js"></script>
+    <script src="/js/redactor/plugins/video/video.js"></script>
+    <script src="/js/redactor/plugins/table/table.js"></script>
+    <script src="/js/redactor/plugins/fullscreen/fullscreen.js"></script>
+    <script src="/js/redactor/plugins/imagemanager/imagemanager.js"></script>
     <script>
         $(document).ready(function () {
             $('#chatTwitch').css("height", $('#videoTwitch').css("height"));
@@ -112,7 +116,9 @@
                     image.addClass('img-responsive');
                 },
                 imageUpload: '/app_dev.php/admin/upload',
-                minHeight: 300 // pixels
+                imageManagerJson: '/app_dev.php/admin/image',
+                minHeight: 300,
+                plugins: ['table', 'video', 'fullscreen', 'imagemanager']
             });
         });
     </script>

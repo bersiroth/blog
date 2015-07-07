@@ -40,6 +40,16 @@
             {% endfor %}
         </div>
         <hr>
+        {% if list_articles|length == 1 %}
+            {% for comment in list_comments %}
+                <div class="panel">
+                    <div class="row">
+                        <div class="col-md-3">bersiroth à 07/07 13:27</div>
+                    </div>
+                    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias architecto debitis, eum facere fuga fugiat fugit ipsum, magni, omnis quasi quo ratione rem suscipit veniam vero vitae voluptatibus. Facere, pariatur!</div>
+                </div>
+            {% endfor %}
+        {% endif %}
     {% else %}
         <h1>Pas (encore !) d'article</h1>
     {% endfor %}
@@ -48,14 +58,15 @@
         <nav class="text-center">
             <ul class="pagination">
                 {% if pagination.page != 1 %}
-                <li>
-                    <a href="?page={{ pagination.page - 1 }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
+                    <li>
+                        <a href="?page={{ pagination.page - 1 }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
                 {% endif %}
                 {% for page in 1..pagination.nbPage %}
-                    <li {% if page == pagination.page %}class="active"{% endif %} ><a href="?page={{ page }}">{{ page }}</a></li>
+                    <li {% if page == pagination.page %}class="active"{% endif %} ><a
+                                href="?page={{ page }}">{{ page }}</a></li>
                 {% endfor %}
                 {% if pagination.page != pagination.nbPage %}
                     <li>

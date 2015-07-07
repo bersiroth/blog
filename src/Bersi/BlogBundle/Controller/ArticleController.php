@@ -19,6 +19,8 @@ class ArticleController extends Controller
         }
         $option = [];
         $option['list_articles'] = $articles;
+        $comments = ['test','test','test','test'];
+        $option['list_comments'] = $comments;
         if ($pagination != null) $option['pagination'] = $pagination;
         return $this->render('BersiBlogBundle::layout.html.twig', $option);
     }

@@ -6,6 +6,7 @@ use Bersi\BlogBundle\Entity\Article;
 use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -72,7 +73,9 @@ class ArticleController extends Controller
                 if (!$extension) $extension = 'bin';
                 $goodExtension = ['jpeg', 'png', 'gif'];
                 if (in_array($extension, $goodExtension)) {
-                    $path = realpath(__DIR__ . '/../../../../../web/images/' . $article->getCategory()->getName() . '/');
+                    $DOCUMENT_ROOT = $this->get('request')->server->get('DOCUMENT_ROOT');
+                    $path = $DOCUMENT_ROOT . '/images/' . $article->getCategory()->getName() . '/';
+                    if (!file_exists($path)) mkdir($path, 0777, true);
                     $file->move($path, $article->getSlug() . '.jpeg');
                 }
             }
@@ -112,7 +115,9 @@ class ArticleController extends Controller
                 if (!$extension) $extension = 'bin';
                 $goodExtension = ['jpeg', 'png', 'gif'];
                 if (in_array($extension, $goodExtension)) {
-                    $path = realpath(__DIR__ . '/../../../../../web/images/articles/');
+                    $DOCUMENT_ROOT = $this->get('request')->server->get('DOCUMENT_ROOT');
+                    $path = $DOCUMENT_ROOT . '/images/articles/';
+                    if (!file_exists($path)) mkdir($path, 0777, true);
                     $file->move($path, $file->getClientOriginalName());
                 }
             }
@@ -120,6 +125,28 @@ class ArticleController extends Controller
                 'filelink' => '/images/articles/' . $file->getClientOriginalName()
             );
             return new JsonResponse($array);
+        };
+    }
+    /**
+     * @Route("/admin/image", name="admin_bersi_blog_image")
+     */
+    public function imagedAction(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $DOCUMENT_ROOT = $this->get('request')->server->get('DOCUMENT_ROOT');
+            $path = $DOCUMENT_ROOT . '/images';
+            $result = [];
+            if (file_exists($path)) {
+                $finder = new Finder();
+                $finder->files()->in($path)->files();
+                foreach ($finder as $file) {
+                    $image['image'] = '/images/' . $file->getRelativePathname();
+                    $image['thumb'] = '/images/' . $file->getRelativePathname();
+                    $image['title'] = $file->getRelativePath();
+                    $result[] = $image;
+                }
+            }
+            return new JsonResponse($result);
         };
     }
 }
