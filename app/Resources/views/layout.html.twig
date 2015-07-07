@@ -122,7 +122,7 @@
             $('#chatTwitch').css("height", $('#videoTwitch').css("height"));
 
             $('#selectStream').on('change', function(e){
-                console.debug( this.value );
+                $('#titreStream').text(this.value);
                 $('#selectVideoStream').html('<iframe src="http://www.twitch.tv/' + this.value + '/embed"></iframe>');
                 $('#selectTchatStream').html('<iframe src="http://www.twitch.tv/' + this.value + '/chat?popout=" id="chatTwitch" width="100%"></iframe>');
                 $('#chatTwitch').css("height", $('#videoTwitch').css("height"));

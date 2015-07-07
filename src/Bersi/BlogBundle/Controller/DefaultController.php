@@ -14,7 +14,8 @@ class DefaultController extends Controller
      */
     public function twitchAction()
     {
-        $channels = [ 'esl_csgo', 'Mojang', 'bersiroth', 'akosy', 'nikorasu'];
+//        $channels = [ 'esl_csgo', 'summit1g', 'bersiroth', 'akosy', 'nikorasu'];
+        $channels = ['bersiroth', 'akosy', 'epsilus_'];
         $client = new Client();
         $lives = [];
         foreach($channels as $channel) {
@@ -22,6 +23,7 @@ class DefaultController extends Controller
             $res = json_decode($res->getBody());
             $live = $res->stream === null ? false : true;
             if ($live){
+                if ($channel == 'epsilus_') $channel = 'nikorasu';
                 $lives[] = $channel;
             }
         }

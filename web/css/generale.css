@@ -31,12 +31,21 @@ body {
     background: black none;
 }
 
-#panelVideoTwitch{
-    margin-bottom: 0px;
-    padding-bottom: 10px;
+#titreStream {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 10px 0px;
+    text-align: center;
+    color: #337ab7;
+    text-transform: capitalize;
 }
 
-#formSelectStream {
+#panelVideoTwitch{
+    margin-bottom: 0px;
+    border: none;
+}
+
+#selecteurStream {
     padding: 10px 0px;
 }
 
