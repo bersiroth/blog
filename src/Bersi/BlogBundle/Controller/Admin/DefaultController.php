@@ -26,6 +26,7 @@ class DefaultController extends Controller
         foreach ($meta as $m) {
             $entities[] = substr(strrchr($m->name, '\\'), 1);
         }
+        sort($entities);
         return $this->render('BersiBlogBundle:Admin:menu.html.twig', array(
             'menus' => $entities
         ));
