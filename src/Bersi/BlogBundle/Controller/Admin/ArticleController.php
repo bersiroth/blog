@@ -140,7 +140,7 @@ class ArticleController extends Controller
                 $finder = new Finder();
                 $finder->files()->in($path)->files();
                 foreach ($finder as $file) {
-                    $image['image'] = '/images/' . $file->getRelativePathname();
+                    $imagesdfsdf['image'] = '/images/' . $file->getRelativePathname();
                     $image['thumb'] = '/images/' . $file->getRelativePathname();
                     $image['title'] = $file->getRelativePath();
                     $result[] = $image;
