@@ -16,8 +16,10 @@
                 <li {% if route == 'admin_bersi_blog' %}class="active"{% endif %} ><a
                             href="{{ path('admin_bersi_blog') }}">Accueil</a></li>
                 {% for menu in menus %}
-                    <li {% if route == 'admin_bersi_blog_' ~ menu|lower %}class="active"{% endif %}><a
-                                href="{{ path('admin_bersi_blog_' ~ menu|lower) }}">{{ menu }}</a></li>
+                    {% if menu|lower != 'comment' %}
+                        <li {% if route == 'admin_bersi_blog_' ~ menu|lower %}class="active"{% endif %}><a
+                                    href="{{ path('admin_bersi_blog_' ~ menu|lower) }}">{{ menu }}</a></li>
+                    {% endif %}
                 {% endfor %}
                 <li><a href="{{ path('bersi_blog_article') }}">Site</a></li>
             </ul>

@@ -91,4 +91,8 @@ class ArticleController extends Controller
         return $this->afficherArticle($articles, $pagination);
     }
 
+    public function commentAction(){
+        return $this->render('BersiBlogBundle:Default:comment.html.twig');
+    }
+
 }

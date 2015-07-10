@@ -50,6 +50,7 @@
                 </div>
             {% endfor %}
         {% endif %}
+        {{ render(controller("BersiBlogBundle:Article:comment")) }}
     {% else %}
         <h1>Pas (encore !) d'article</h1>
     {% endfor %}
