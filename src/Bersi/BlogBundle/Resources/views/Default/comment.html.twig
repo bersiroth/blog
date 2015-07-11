@@ -1,1 +1,17 @@
-{{ include("BersiBlogBundle:Default/Forms:comment.html.twig") }}
+<div id="article-comment">
+    {% if comments|length > 0 %}
+        {% for comment in comments %}
+            <div class="panel">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="comment-pseudo">{{ comment.pseudo|capitalize }}</div>
+                        <small>{{ comment.date|date('d/m/y H:i') }}</small>
+                    </div>
+                    <div class="col-md-12">{{ comment.content }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    {{ include("BersiBlogBundle:Default/Forms:comment.html.twig") }}
+</div>

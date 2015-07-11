@@ -28,4 +28,16 @@
         </div>
     </div>
     <br>
+    <script>
+        $(document).ready(function () {
+            $('#chatTwitch').css("height", $('#videoTwitch').css("height"));
+
+            $('#selectStream').on('change', function(e){
+                $('#titreStream').text(this.value);
+                $('#selectVideoStream').html('<iframe src="http://www.twitch.tv/' + this.value + '/embed"></iframe>');
+                $('#selectTchatStream').html('<iframe src="http://www.twitch.tv/' + this.value + '/chat?popout=" id="chatTwitch" width="100%"></iframe>');
+                $('#chatTwitch').css("height", $('#videoTwitch').css("height"));
+            });
+        });
+    </script>
 {% endif %}

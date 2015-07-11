@@ -41,16 +41,8 @@
         </div>
         <hr>
         {% if list_articles|length == 1 %}
-            {% for comment in list_comments %}
-                <div class="panel">
-                    <div class="row">
-                        <div class="col-md-3">bersiroth à 07/07 13:27</div>
-                    </div>
-                    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias architecto debitis, eum facere fuga fugiat fugit ipsum, magni, omnis quasi quo ratione rem suscipit veniam vero vitae voluptatibus. Facere, pariatur!</div>
-                </div>
-            {% endfor %}
+            {{ render(controller("BersiBlogBundle:Article:comment", {'articleId': article.id}))|convert_encoding('UTF-8', ' iso-8859-1')|raw }}
         {% endif %}
-        {{ render(controller("BersiBlogBundle:Article:comment")) }}
     {% else %}
         <h1>Pas (encore !) d'article</h1>
     {% endfor %}

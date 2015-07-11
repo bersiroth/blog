@@ -104,6 +104,11 @@ hr{
     border-top: 2px solid rgb(2, 34, 93);
 }
 
+.comment-pseudo {
+    color: #3a8ac9;
+    font-weight: bold;
+}
+
 .col-sm-9 .redactor-box {
     margin-bottom: 0px;
 }

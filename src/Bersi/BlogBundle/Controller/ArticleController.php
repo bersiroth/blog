@@ -2,9 +2,11 @@
 
 namespace Bersi\BlogBundle\Controller;
 
+use Bersi\BlogBundle\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GuzzleHttp\Client;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends Controller
@@ -19,7 +21,7 @@ class ArticleController extends Controller
         }
         $option = [];
         $option['list_articles'] = $articles;
-        $comments = ['test','test','test','test'];
+        $comments = ['test', 'test', 'test', 'test'];
         $option['list_comments'] = $comments;
         if ($pagination != null) $option['pagination'] = $pagination;
         return $this->render('BersiBlogBundle::layout.html.twig', $option);
@@ -28,7 +30,7 @@ class ArticleController extends Controller
     /**
      * @Route("/tag/{tag}", name="bersi_blog_tag")
      */
-    public function tagAction(Request $request,$tag)
+    public function tagAction(Request $request, $tag)
     {
         $result = [];
         if ($tag !== null) {
@@ -47,9 +49,64 @@ class ArticleController extends Controller
                 'nbPerPage' => $nbPerPage,
                 'nbPage' => ceil((int)$nbTotalArticles / (int)$nbPerPage)
             ];
-            $result = array_slice($result ,($page - 1) * $nbPerPage ,$nbPerPage);
+            $result = array_slice($result, ($page - 1) * $nbPerPage, $nbPerPage);
         }
         return $this->afficherArticle($result, $pagination);
+    }
+
+    /**
+     * @Route("/comment", name="bersi_blog_comment")
+     */
+    public function commentAction($articleId = null, Request $request)
+    {
+        $comment = new Comment();
+        $form = $this->get('form.factory')->createBuilder('form', $comment)
+            ->add('pseudo', 'text')
+            ->add('content', 'textarea')
+            ->add('article_id', 'hidden', array('mapped' => false,
+                'data' => $articleId))
+            ->add('Envoyer', 'submit')
+            ->getForm();
+
+        if ($request->isXmlHttpRequest()) {
+            $form->handleRequest($request);
+            $articleId = $request->get('form[article_id]',1);
+            $date = new \DateTime();
+            $date->format('Y-m-d H:i:s');
+            $comment->setDate($date);
+            $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Article');
+            $article = $repository->find($articleId);
+            $comment->setArticle($article);
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($comment);
+                $em->flush();
+                $comment = new Comment();
+                $form = $this->get('form.factory')->createBuilder('form', $comment)
+                    ->add('pseudo', 'text')
+                    ->add('content', 'textarea')
+                    ->add('article_id', 'hidden', array('mapped' => false,
+                        'data' => $articleId))
+                    ->add('save', 'submit')
+                    ->getForm();
+                return $this->render('BersiBlogBundle:Default:comment.html.twig', [
+                    'comments' => $this->getAllComment($articleId),
+                    'form' => $form->createView()
+                ]);
+            }
+        }
+        return $this->render('BersiBlogBundle:Default:comment.html.twig', [
+            'comments' => $this->getAllComment($articleId),
+            'form' => $form->createView()
+        ]);
+
+    }
+
+    function getAllComment($articleId){
+        $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
+        $comments = $repository->findBy(
+            array('article' => $articleId));
+        return $comments;
     }
 
     /**
@@ -90,9 +147,4 @@ class ArticleController extends Controller
         }
         return $this->afficherArticle($articles, $pagination);
     }
-
-    public function commentAction(){
-        return $this->render('BersiBlogBundle:Default:comment.html.twig');
-    }
-
 }
