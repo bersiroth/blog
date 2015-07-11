@@ -70,7 +70,7 @@ class ArticleController extends Controller
 
         if ($request->isXmlHttpRequest()) {
             $form->handleRequest($request);
-            $articleId = $request->get('form[article_id]',1);
+            $articleId = $request->get('form')['article_id'];
             $date = new \DateTime();
             $date->format('Y-m-d H:i:s');
             $comment->setDate($date);
@@ -87,7 +87,7 @@ class ArticleController extends Controller
                     ->add('content', 'textarea')
                     ->add('article_id', 'hidden', array('mapped' => false,
                         'data' => $articleId))
-                    ->add('save', 'submit')
+                    ->add('Envoyer', 'submit')
                     ->getForm();
                 return $this->render('BersiBlogBundle:Default:comment.html.twig', [
                     'comments' => $this->getAllComment($articleId),
