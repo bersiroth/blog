@@ -43,7 +43,6 @@ class CategoryController extends Controller
                 'success',
                 'Creation / modification OK !'
             );
-
             return $this->redirect($this->generateUrl('admin_bersi_blog_category'));
         }
         return $this->render('BersiBlogBundle:Admin/Forms:category.html.twig', array(

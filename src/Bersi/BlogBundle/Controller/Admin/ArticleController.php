@@ -56,8 +56,8 @@ class ArticleController extends Controller
             ->getForm();
         $form->handleRequest($request);
         $image = false;
-        if ($article->getId() !== null && file_exists(__DIR__ . '/../../../../../web/images/' . $article->getCategory()->getName() . '/' . $article->getSlug() . '.jpeg')) {
-            $image = '/images/' . $article->getCategory()->getName() . '/' . $article->getSlug() . '.jpeg';
+        if ($article->getId() !== null && file_exists(__DIR__ . '/../../../../../web/images/' . $article->getSlug() . '.jpeg')) {
+            $image = '/images/' . $article->getSlug() . '.jpeg';
         }
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -74,7 +74,7 @@ class ArticleController extends Controller
                 $goodExtension = ['jpeg', 'png', 'gif'];
                 if (in_array($extension, $goodExtension)) {
                     $DOCUMENT_ROOT = $this->get('request')->server->get('DOCUMENT_ROOT');
-                    $path = $DOCUMENT_ROOT . '/images/' . $article->getCategory()->getName() . '/';
+                    $path = $DOCUMENT_ROOT . '/images/';
                     if (!file_exists($path)) mkdir($path, 0777, true);
                     $file->move($path, $article->getSlug() . '.jpeg');
                 }
