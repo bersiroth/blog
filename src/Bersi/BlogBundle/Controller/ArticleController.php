@@ -102,7 +102,8 @@ class ArticleController extends Controller
 
     }
 
-    function getAllComment($articleId){
+    function getAllComment($articleId)
+    {
         $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
         $comments = $repository->findBy(
             array('article' => $articleId));
