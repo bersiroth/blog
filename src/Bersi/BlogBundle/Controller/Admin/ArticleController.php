@@ -25,6 +25,19 @@ class ArticleController extends Controller
     }
 
     /**
+     * @Route("/admin/article/comment/{id}", name="admin_bersi_blog_comment_article")
+     */
+    public function commentArticleAction($id = null)
+    {
+        $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
+        $comments = $repository->findBy(
+            array('article' => $id));
+        return $this->render('BersiBlogBundle:Admin:comment.html.twig', array(
+            'comments' => $comments,
+        ));
+    }
+
+    /**
      * @Route("/admin/article/edit/{id}", name="admin_bersi_blog_edit_article")
      * @Route("/admin/article/add", name="admin_bersi_blog_add_article")
      */
@@ -104,6 +117,22 @@ class ArticleController extends Controller
     }
 
     /**
+     * @Route("/admin/comment/publish/{id}", name="admin_bersi_blog_publish_comment")
+     */
+    public function publishCommentAction($id, Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $article = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment')->find($id);
+            $state = $article->getPublished() == true ? false : true;
+            $article->setPublished($state);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+            return new JsonResponse(array('id' => $id));
+        };
+    }
+
+    /**
      * @Route("/admin/upload", name="admin_bersi_blog_upload")
      */
     public function uploadAction(Request $request)
@@ -127,6 +156,7 @@ class ArticleController extends Controller
             return new JsonResponse($array);
         };
     }
+
     /**
      * @Route("/admin/image", name="admin_bersi_blog_image")
      */

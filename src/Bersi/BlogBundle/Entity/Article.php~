@@ -319,4 +319,37 @@ class Article
         return $this->introduction;
     }
 
+
+    /**
+     * Add comments
+     *
+     * @param \Bersi\BlogBundle\Entity\Comment $comments
+     * @return Article
+     */
+    public function addComment(\Bersi\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Bersi\BlogBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Bersi\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 }

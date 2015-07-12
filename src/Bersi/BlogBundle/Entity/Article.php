@@ -50,7 +50,7 @@ class Article
      * @ORM\Column(name="content", type="text")
      */
     private $content;
-    
+
     /**
      * @var boolean
      *
@@ -87,13 +87,14 @@ class Article
     public function __construct()
     {
         $this->date = new \Datetime();
-        $this->tags   = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -116,7 +117,7 @@ class Article
     /**
      * Get date
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getDate()
     {
@@ -139,7 +140,7 @@ class Article
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -162,7 +163,7 @@ class Article
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -185,7 +186,7 @@ class Article
     /**
      * Get published
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getPublished()
     {
@@ -208,7 +209,7 @@ class Article
     /**
      * Get slug
      *
-     * @return string 
+     * @return string
      */
     public function getSlug()
     {
@@ -232,7 +233,7 @@ class Article
     /**
      * Get categories
      *
-     * @return \Bersi\BlogBundle\Entity\Category 
+     * @return \Bersi\BlogBundle\Entity\Category
      */
     public function getCategory()
     {
@@ -255,7 +256,7 @@ class Article
     /**
      * Get author
      *
-     * @return \Bersi\BlogBundle\Entity\Author 
+     * @return \Bersi\BlogBundle\Entity\Author
      */
     public function getAuthor()
     {
@@ -289,7 +290,7 @@ class Article
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags()
     {
@@ -312,7 +313,7 @@ class Article
     /**
      * Get introduction
      *
-     * @return string 
+     * @return string
      */
     public function getIntroduction()
     {
@@ -325,28 +326,27 @@ class Article
      *
      * @param \Bersi\BlogBundle\Entity\Comment $comments
      * @return Article
-     */
-    public function addComment(\Bersi\BlogBundle\Entity\Comment $comments)
-    {
-        $this->comments[] = $comments;
-
-        return $this;
-    }
+//     */
+//    public function addComment(\Bersi\BlogBundle\Entity\Comment $comments)
+//    {
+//        $this->comments[] = $comments;
+//        return $this;
+//    }
 
     /**
      * Remove comments
      *
      * @param \Bersi\BlogBundle\Entity\Comment $comments
      */
-    public function removeComment(\Bersi\BlogBundle\Entity\Comment $comments)
-    {
-        $this->comments->removeElement($comments);
-    }
+//    public function removeComment(\Bersi\BlogBundle\Entity\Comment $comments)
+//    {
+//        $this->comments->removeElement($comments);
+//    }
 
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {

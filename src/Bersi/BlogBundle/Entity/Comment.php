@@ -48,6 +48,13 @@ class Comment
     private $article;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="published", type="boolean")
+     */
+    private $published = false;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -147,5 +154,28 @@ class Comment
     public function getArticle()
     {
         return $this->article;
+    }
+
+    /**
+     * Set published
+     *
+     * @param boolean $published
+     * @return Comment
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
+    /**
+     * Get published
+     *
+     * @return boolean 
+     */
+    public function getPublished()
+    {
+        return $this->published;
     }
 }

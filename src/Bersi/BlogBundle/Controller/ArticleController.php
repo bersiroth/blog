@@ -6,7 +6,6 @@ use Bersi\BlogBundle\Entity\Comment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use GuzzleHttp\Client;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ArticleController extends Controller
@@ -102,11 +101,11 @@ class ArticleController extends Controller
 
     }
 
-    function getAllComment($articleId)
+    private function getAllComment($articleId)
     {
         $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
         $comments = $repository->findBy(
-            array('article' => $articleId));
+            array('published' => true, 'article' => $articleId));
         return $comments;
     }
 

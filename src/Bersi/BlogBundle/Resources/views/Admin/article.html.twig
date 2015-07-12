@@ -13,6 +13,7 @@
             <tr>
                 <th>Date</th>
                 <th>Titre</th>
+                <th>Commentaire</th>
                 <th>Auteur</th>
                 <th>Categorie</th>
                 <th>Tag</th>
@@ -23,24 +24,36 @@
             {% endif %}
             <tr>
                 <td>{{ article.date|date('d-m-Y') }}</td>
-                <td><a href="{{ path('admin_bersi_blog_edit_article', { 'id': article.id}) }}">{{ article.title }}</a></td>
+                <td><a href="{{ path('admin_bersi_blog_edit_article', { 'id': article.id}) }}">{{ article.title }}</a>
+                </td>
+                <td>
+                    {% if article.comments.count > 0 %}
+                        <a href="{{ path('admin_bersi_blog_comment_article', { 'id': article.id}) }}">
+                            <button class="btn btn-primary btn-xs" role="button">
+                                <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+                            </button>
+                        </a>
+                    {% endif %}
+                </td>
                 <td>{{ article.author.pseudo }}</td>
                 <td>{{ article.category.name }}</td>
                 <td>
-                {% for tag in article.tags %}
-                    {{ tag.name }}{% if loop.last == false %},{% endif %}
-                {% endfor %}
+                    {% for tag in article.tags %}
+                        {{ tag.name }}{% if loop.last == false %},{% endif %}
+                    {% endfor %}
                 </td>
                 <td>
                     {% if article.published == true %}
                         <button href="{{ path('admin_bersi_blog_publish_article', { 'id': article.id}) }}"
-                                id="publication-{{ article.id }}" class="btn btn-success publication btn-xs" role="button">
-                            <span class="glyphicon glyphicon glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                                id="publication-{{ article.id }}" class="btn btn-success publication btn-xs"
+                                role="button">
+                            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
                         </button>
                     {% else %}
                         <button href="{{ path('admin_bersi_blog_publish_article', { 'id': article.id}) }}"
-                                id="publication-{{ article.id }}" class="btn btn-danger publication btn-xs" role="button">
-                            <span class="glyphicon glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                id="publication-{{ article.id }}" class="btn btn-danger publication btn-xs"
+                                role="button">
+                            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
                         </button>
                     {% endif %}
                 </td>

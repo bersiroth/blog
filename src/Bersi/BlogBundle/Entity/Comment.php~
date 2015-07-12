@@ -48,6 +48,13 @@ class Comment
     private $article;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="published", type="boolean")
+     */
+    private $published = false;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -124,5 +131,28 @@ class Comment
     public function getPseudo()
     {
         return $this->pseudo;
+    }
+
+    /**
+     * Set article
+     *
+     * @param \Bersi\BlogBundle\Entity\Article $article
+     * @return Comment
+     */
+    public function setArticle(\Bersi\BlogBundle\Entity\Article $article = null)
+    {
+        $this->article = $article;
+
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return \Bersi\BlogBundle\Entity\Article 
+     */
+    public function getArticle()
+    {
+        return $this->article;
     }
 }
