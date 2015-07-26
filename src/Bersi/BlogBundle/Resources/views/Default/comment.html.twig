@@ -10,8 +10,11 @@
                     <div class="col-md-12">{{ comment.content }}</div>
                 </div>
             </div>
+            <button class="btn btn-xs btn-primary pull-right repondre" id="{{ comment.id }}">répondre</button>
+            <br>
         {% endfor %}
     {% endif %}
 
     {{ include("BersiBlogBundle:Default/Forms:comment.html.twig") }}
 </div>
+

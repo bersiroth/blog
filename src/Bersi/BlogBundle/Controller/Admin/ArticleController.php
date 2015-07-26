@@ -3,7 +3,6 @@
 namespace Bersi\BlogBundle\Controller\Admin;
 
 use Bersi\BlogBundle\Entity\Article;
-use Doctrine\ORM\Query;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Finder\Finder;
@@ -21,19 +20,6 @@ class ArticleController extends Controller
         $articles = $this->getDoctrine()->getRepository('BersiBlogBundle:Article')->findAll();
         return $this->render('BersiBlogBundle:Admin:article.html.twig', array(
             'liste_articles' => $articles,
-        ));
-    }
-
-    /**
-     * @Route("/admin/article/comment/{id}", name="admin_bersi_blog_comment_article")
-     */
-    public function commentArticleAction($id = null)
-    {
-        $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
-        $comments = $repository->findBy(
-            array('article' => $id));
-        return $this->render('BersiBlogBundle:Admin:comment.html.twig', array(
-            'comments' => $comments,
         ));
     }
 
@@ -107,22 +93,6 @@ class ArticleController extends Controller
     {
         if ($request->isXmlHttpRequest()) {
             $article = $this->getDoctrine()->getRepository('BersiBlogBundle:Article')->find($id);
-            $state = $article->getPublished() == true ? false : true;
-            $article->setPublished($state);
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($article);
-            $em->flush();
-            return new JsonResponse(array('id' => $id));
-        };
-    }
-
-    /**
-     * @Route("/admin/comment/publish/{id}", name="admin_bersi_blog_publish_comment")
-     */
-    public function publishCommentAction($id, Request $request)
-    {
-        if ($request->isXmlHttpRequest()) {
-            $article = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment')->find($id);
             $state = $article->getPublished() == true ? false : true;
             $article->setPublished($state);
             $em = $this->getDoctrine()->getManager();
