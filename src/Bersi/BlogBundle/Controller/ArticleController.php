@@ -54,9 +54,11 @@ class ArticleController extends Controller
     private function getCommentForm($comment = null, $articleId = null){
         $form = $this->get('form.factory')->createBuilder('form', $comment)
             ->add('pseudo', 'text')
-            ->add('content', 'textarea')
-            ->add('article_id', 'hidden', array('mapped' => false,
-                'data' => $articleId))
+            ->add('content', 'textarea',[
+                'max_length' => 1000, ])
+            ->add('article_id', 'hidden',[
+                    'mapped' => false,
+                    'data' => $articleId ])
             ->add('Envoyer', 'submit')
             ->getForm();
         return $form;
@@ -70,8 +72,8 @@ class ArticleController extends Controller
         $comment = new Comment();
         $form = $this->getCommentForm($comment, $articleId);
         if ($request->isXmlHttpRequest()) {
-            // troncer le commentaire a 255 caracteres
             $form->handleRequest($request);
+            $comment->setContent(substr($comment->getContent(),0 ,1000));
             $articleId = $request->get('form')['article_id'];
             $date = new \DateTime();
             $date->format('Y-m-d H:i:s');

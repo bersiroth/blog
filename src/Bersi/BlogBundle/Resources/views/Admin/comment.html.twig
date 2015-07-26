@@ -17,9 +17,8 @@
             {% endif %}
             <tr>
                 <td>{{ comment.date|date('d-m-Y h:i') }}</td>
-                {#<td><a href="{{ path('admin_bersi_blog_edit_comment', { 'id': comment.id}) }}">{{ comment.title }}</a></td>#}
                 <td>{{ comment.pseudo }}</td>
-                <td>{{ comment.content }}</td>
+                <td>{{ comment.content[:100] }}</td>
                 <td>
                     {% if comment.published == true %}
                         <button href="{{ path('admin_bersi_blog_publish_comment', { 'id': comment.id}) }}"
