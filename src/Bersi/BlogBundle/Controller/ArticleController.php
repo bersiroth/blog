@@ -51,12 +51,7 @@ class ArticleController extends Controller
         return $this->afficherArticle($result, $pagination);
     }
 
-    /**
-     * @Route("/comment", name="bersi_blog_comment")
-     */
-    public function commentAction($articleId = null, Request $request)
-    {
-        $comment = new Comment();
+    private function getCommentForm($comment = null, $articleId = null){
         $form = $this->get('form.factory')->createBuilder('form', $comment)
             ->add('pseudo', 'text')
             ->add('content', 'textarea')
@@ -64,8 +59,18 @@ class ArticleController extends Controller
                 'data' => $articleId))
             ->add('Envoyer', 'submit')
             ->getForm();
+        return $form;
+    }
 
+    /**
+     * @Route("/comment", name="bersi_blog_comment")
+     */
+    public function commentAction($articleId = null, Request $request)
+    {
+        $comment = new Comment();
+        $form = $this->getCommentForm($comment, $articleId);
         if ($request->isXmlHttpRequest()) {
+            // troncer le commentaire a 255 caracteres
             $form->handleRequest($request);
             $articleId = $request->get('form')['article_id'];
             $date = new \DateTime();
@@ -74,18 +79,13 @@ class ArticleController extends Controller
             $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Article');
             $article = $repository->find($articleId);
             $comment->setArticle($article);
+            $comment->setPublished(true);
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($comment);
                 $em->flush();
                 $comment = new Comment();
-                $form = $this->get('form.factory')->createBuilder('form', $comment)
-                    ->add('pseudo', 'text')
-                    ->add('content', 'textarea')
-                    ->add('article_id', 'hidden', array('mapped' => false,
-                        'data' => $articleId))
-                    ->add('Envoyer', 'submit')
-                    ->getForm();
+                $form = $this->getCommentForm($comment, $articleId);
                 return $this->render('BersiBlogBundle:Default:comment.html.twig', [
                     'comments' => $this->getAllComment($articleId),
                     'form' => $form->createView()
