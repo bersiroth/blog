@@ -326,22 +326,22 @@ class Article
      *
      * @param \Bersi\BlogBundle\Entity\Comment $comments
      * @return Article
-//     */
-//    public function addComment(\Bersi\BlogBundle\Entity\Comment $comments)
-//    {
-//        $this->comments[] = $comments;
-//        return $this;
-//    }
+     */
+    public function addComment(\Bersi\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+        return $this;
+    }
 
     /**
      * Remove comments
      *
      * @param \Bersi\BlogBundle\Entity\Comment $comments
      */
-//    public function removeComment(\Bersi\BlogBundle\Entity\Comment $comments)
-//    {
-//        $this->comments->removeElement($comments);
-//    }
+    public function removeComment(\Bersi\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
 
     /**
      * Get comments
@@ -351,5 +351,16 @@ class Article
     public function getComments()
     {
         return $this->comments;
+    }
+
+    public function getCountPublishComment()
+    {
+        $publishComment = array();
+        foreach($this->comments as $comment){
+            if($comment->getPublished()){
+                $publishComment[] = $comment;
+            }
+        }
+        return count($publishComment);
     }
 }

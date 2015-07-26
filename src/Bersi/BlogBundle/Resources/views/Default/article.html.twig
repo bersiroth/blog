@@ -24,7 +24,7 @@
             <div style="color : #3a8ac9;font-weight: bold;"><a
                         href="{{ path('bersi_blog_article', { 'slug': article.slug, 'category': article.category.name }) }}">Lire
                     la suite</a></div>
-            <div>{{ article.comments.count }} commentaire(s)</div>
+            <div>{{ article.getCountPublishComment }} commentaire(s)</div>
             <br>
         {% else %}
             <p>
