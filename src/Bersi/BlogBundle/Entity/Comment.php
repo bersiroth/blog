@@ -48,6 +48,16 @@ class Comment
     private $article;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Bersi\BlogBundle\Entity\Comment", cascade={"persist"})
+     */
+    private $comment;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Bersi\BlogBundle\Entity\Comment",  mappedBy="comment")
+     */
+    private $comments;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="published", type="boolean")
@@ -177,5 +187,69 @@ class Comment
     public function getPublished()
     {
         return $this->published;
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set comment
+     *
+     * @param \Bersi\BlogBundle\Entity\Comment $comment
+     * @return Comment
+     */
+    public function setComment(\Bersi\BlogBundle\Entity\Comment $comment = null)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return \Bersi\BlogBundle\Entity\Comment 
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Bersi\BlogBundle\Entity\Comment $comments
+     * @return Comment
+     */
+    public function addComment(\Bersi\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Bersi\BlogBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Bersi\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

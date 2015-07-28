@@ -1,4 +1,4 @@
-<h4>Commenter cet article</h4>
+<h4 id="titreComment">Commenter cet article</h4>
 
 <div class="well">
     <form action="{{ path('bersi_blog_comment') }}" method="post" {{ form_enctype(form) }} class="form-horizontal"
@@ -17,8 +17,8 @@
                 {{ form_widget(form.content, {'attr': {'class': 'form-control','rows' : '10'}}) }}
             </div>
         </div>
-        <input type="hidden" value="" id="idReponse"/>
-        {{ form_widget(form.Envoyer, {'attr': {'class': 'btn btn-primary pull-left' }}) }}
+        {{ form_widget(form.Envoyer, {'attr': {'class': 'btn btn-primary pull-right' }}) }}
+        <button id="stopReponse" class="btn btn-primary pull-left" style="display: none">Annuler la r&eacute;ponse</button>
         {{ form_rest(form) }}
         {{ form_end(form) }}
         <br/>
@@ -51,9 +51,19 @@
         });
 
         $('.repondre').click(function () {
-            
-            console.debug(this.id);
+            $('#form_parent_id').val(this.id);
+            var pseudo = $(this).parent().find('.comment-pseudo').html();
+            $('#titreComment').html('R&eacute;pondre a ' + pseudo );
+            $('#stopReponse').css('display','block');
             $('html, body').animate({scrollTop: $('#form_pseudo').offset().top}, 'slow');
+        });
+
+
+        $('#stopReponse').click(function (e) {
+            e.preventDefault();
+            $('#form_parent_id').val('');
+            $('#titreComment').html('Commenter cet article');
+            $('#stopReponse').css('display','none');
         });
     });
 </script>

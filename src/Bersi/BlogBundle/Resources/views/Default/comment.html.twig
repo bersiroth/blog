@@ -1,20 +1,37 @@
 <div id="article-comment">
     {% if comments|length > 0 %}
         {% for comment in comments %}
-            <div class="panel">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="comment-pseudo">{{ comment.pseudo|capitalize }}</div>
-                        <small>{{ comment.date|date('d/m/y H:i') }}</small>
+            <div class="blockComment">
+                <div class="panel">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="comment-pseudo">{{ comment.pseudo|capitalize }}</div>
+                            <small>{{ comment.date|date('d/m/y H:i') }}</small>
+                        </div>
+                        <div class="col-md-12"><div class="panel" style="padding: 5px; border: 1px solid rgb(2, 34, 93)">{{ comment.content }}</div></div>
                     </div>
-                    <div class="col-md-12">{{ comment.content }}</div>
                 </div>
+                <button class="btn btn-xs btn-primary pull-right repondre" id="{{ comment.id }}">r&eacute;pondre
+                </button>
+                <br>
             </div>
-            <button class="btn btn-xs btn-primary pull-right repondre" id="{{ comment.id }}">r&eacute;pondre</button>
-            <br>
+            {% if comment.comments|length > 0 %}
+                {% for test in comment.comments %}
+                    <div class="blockComment" style="padding-left: 10%;">
+                        <div class="panel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="comment-pseudo">{{ test.pseudo|capitalize }}</div>
+                                    <small>{{ test.date|date('d/m/y H:i') }}</small>
+                                </div>
+                                <div class="col-md-12"><div class="panel" style="padding: 5px; border: 1px solid rgb(2, 34, 93)">{{ test.content }}</div></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
     {% endif %}
-
     {{ include("BersiBlogBundle:Default/Forms:comment.html.twig") }}
 </div>
 

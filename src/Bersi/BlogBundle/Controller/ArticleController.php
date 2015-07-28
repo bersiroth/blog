@@ -60,6 +60,8 @@ class ArticleController extends Controller
                     'mapped' => false,
                     'data' => $articleId ])
             ->add('Envoyer', 'submit')
+            ->add('parent_id', 'hidden', [
+                    'mapped' => false ])
             ->getForm();
         return $form;
     }
@@ -73,6 +75,13 @@ class ArticleController extends Controller
         $form = $this->getCommentForm($comment, $articleId);
         if ($request->isXmlHttpRequest()) {
             $form->handleRequest($request);
+            $parent_id = $request->get('form')['parent_id'];
+//            echo $parent_id;
+            if(!empty($parent_id)){
+                $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
+                $parentComment = $repository->find($parent_id);
+                $comment->setComment($parentComment);
+            }
             $comment->setContent(substr($comment->getContent(),0 ,1000));
             $articleId = $request->get('form')['article_id'];
             $date = new \DateTime();
@@ -105,7 +114,8 @@ class ArticleController extends Controller
     {
         $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
         $comments = $repository->findBy(
-            array('published' => true, 'article' => $articleId));
+            array('published' => true, 'article' => $articleId, 'comment' => null));
+//        var_dump($comments);die;
         return $comments;
     }
 
