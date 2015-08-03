@@ -117,6 +117,8 @@ class Comment
      */
     public function getContent()
     {
+//        var_dump(utf8_decode($this->content));
+//        return utf8_decode($this->content);
         return $this->content;
     }
 

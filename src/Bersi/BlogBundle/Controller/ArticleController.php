@@ -102,13 +102,10 @@ class ArticleController extends Controller
                 ]);
             }
         }
-        $response = $this->render('BersiBlogBundle:Default:comment.html.twig', [
+        return $this->render('BersiBlogBundle:Default:comment.html.twig', [
             'comments' => $this->getAllComment($articleId),
             'form' => $form->createView()
         ]);
-
-        $response->headers->set('charset', 'utf-8');
-        return $response;
     }
 
     private function getAllComment($articleId)
@@ -116,7 +113,6 @@ class ArticleController extends Controller
         $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
         $comments = $repository->findBy(
             array('published' => true, 'article' => $articleId, 'comment' => null));
-//        var_dump($comments);die;
         return $comments;
     }
 

@@ -42,7 +42,7 @@
         </div>
         <hr>
         {% if list_articles|length == 1 %}
-            {{ render(controller("BersiBlogBundle:Article:comment", {'articleId': article.id}))|convert_encoding('UTF-8', ' iso-8859-1')|raw }}
+            {{ render(controller("BersiBlogBundle:Article:comment", {'articleId': article.id}))|raw }}
         {% endif %}
     {% else %}
         <h1>Pas (encore !) d'article</h1>
