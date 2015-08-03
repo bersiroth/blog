@@ -76,7 +76,6 @@ class ArticleController extends Controller
         if ($request->isXmlHttpRequest()) {
             $form->handleRequest($request);
             $parent_id = $request->get('form')['parent_id'];
-//            echo $parent_id;
             if(!empty($parent_id)){
                 $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
                 $parentComment = $repository->find($parent_id);
@@ -103,11 +102,13 @@ class ArticleController extends Controller
                 ]);
             }
         }
-        return $this->render('BersiBlogBundle:Default:comment.html.twig', [
+        $response = $this->render('BersiBlogBundle:Default:comment.html.twig', [
             'comments' => $this->getAllComment($articleId),
             'form' => $form->createView()
         ]);
 
+        $response->headers->set('charset', 'utf-8');
+        return $response;
     }
 
     private function getAllComment($articleId)
