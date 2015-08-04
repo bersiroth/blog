@@ -12,6 +12,30 @@ class ArticleController extends Controller
 {
     private $nbPerPage = 8;
 
+    /**
+     * @Route("/search", name="bersi_blog_search")
+     */
+    public function searchAction(Request $request)
+    {
+        $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Article');
+        $search = $request->get('q', 1);
+        $articles = $repository->search($search);
+        $nbTotalArticles = count($articles);
+        if ($nbTotalArticles > 1) {
+            $page = 1;
+            $nbPerPage = $this->nbPerPage;
+            $pagination = [
+                'nbTotalArticles' => $nbTotalArticles,
+                'page' => $page,
+                'nbPerPage' => $nbPerPage,
+                'nbPage' => ceil((int)$nbTotalArticles / (int)$nbPerPage)
+            ];
+        } else {
+            $pagination = null;
+        }
+        return $this->afficherArticle($articles, $pagination);
+    }
+
     private function afficherArticle($articles, $pagination = null)
     {
         $moisFR = array(1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
@@ -51,17 +75,18 @@ class ArticleController extends Controller
         return $this->afficherArticle($result, $pagination);
     }
 
-    private function getCommentForm($comment = null, $articleId = null){
+    private function getCommentForm($comment = null, $articleId = null)
+    {
         $form = $this->get('form.factory')->createBuilder('form', $comment)
             ->add('pseudo', 'text')
-            ->add('content', 'textarea',[
-                'max_length' => 1000, ])
-            ->add('article_id', 'hidden',[
-                    'mapped' => false,
-                    'data' => $articleId ])
+            ->add('content', 'textarea', [
+                'max_length' => 1000,])
+            ->add('article_id', 'hidden', [
+                'mapped' => false,
+                'data' => $articleId])
             ->add('Envoyer', 'submit')
             ->add('parent_id', 'hidden', [
-                    'mapped' => false ])
+                'mapped' => false])
             ->getForm();
         return $form;
     }
@@ -76,12 +101,12 @@ class ArticleController extends Controller
         if ($request->isXmlHttpRequest()) {
             $form->handleRequest($request);
             $parent_id = $request->get('form')['parent_id'];
-            if(!empty($parent_id)){
+            if (!empty($parent_id)) {
                 $repository = $this->getDoctrine()->getRepository('BersiBlogBundle:Comment');
                 $parentComment = $repository->find($parent_id);
                 $comment->setComment($parentComment);
             }
-            $comment->setContent(substr($comment->getContent(),0 ,1000));
+            $comment->setContent(substr($comment->getContent(), 0, 1000));
             $articleId = $request->get('form')['article_id'];
             $date = new \DateTime();
             $date->format('Y-m-d H:i:s');

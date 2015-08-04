@@ -16,7 +16,7 @@ class ArticleRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('a');
 
-        $qb ->join('a.category', 'c')
+        $qb->join('a.category', 'c')
             ->addSelect('c')
             ->where('a.published = :publish')
             ->setParameter('publish', true)
@@ -32,7 +32,7 @@ class ArticleRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('a');
 
-        $qb ->where('a.published = :publish')
+        $qb->where('a.published = :publish')
             ->setParameter('publish', true)
             ->andWhere("a.$fieldName = :$fieldName")
             ->setParameter($fieldName, $value)
@@ -45,12 +45,12 @@ class ArticleRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('a');
 
-        if ($categoryNames == null){
-            $qb ->select('count(a.id)')
+        if ($categoryNames == null) {
+            $qb->select('count(a.id)')
                 ->where('a.published = :publish')
                 ->setParameter('publish', true);
         } else {
-            $qb ->select('count(a.id)')
+            $qb->select('count(a.id)')
                 ->join('a.category', 'c')
                 ->where('a.published = :publish')
                 ->setParameter('publish', true)
@@ -60,4 +60,20 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult()[0][1];
     }
 
+    public function search($search)
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        $qb ->where('a.title LIKE :title')
+            ->orWhere('a.content LIKE :content')
+            ->orWhere('a.introduction LIKE :introduction')
+            ->andWhere('a.published = :publish')
+            ->setParameters([
+                'title'         => '%' . $search. '%',
+                'content'       => '%' . $search. '%',
+                'introduction'  => '%' . $search. '%',
+                'publish'       => true
+            ]);
+        return $qb->getQuery()->getResult();
+    }
 }
