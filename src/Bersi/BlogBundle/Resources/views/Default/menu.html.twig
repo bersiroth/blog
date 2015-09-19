@@ -14,12 +14,15 @@
             <ul class="nav navbar-nav">
                 <li {% if category == '' %}class="active"{% endif %} ><a href="{{ path('home_page') }}">Home</a></li>
                 {% for menu in menus %}
-                    <li {% if category == menu.name %}class="active"{% endif %}><a href="{{ path('bersi_blog_article', { 'category': menu.name}) }}">{{ menu.name }}</a></li>
+                    <li {% if category == menu.name %}class="active"{% endif %}><a
+                                href="{{ path('bersi_blog_article', { 'category': menu.name}) }}">{{ menu.name }}</a>
+                    </li>
                 {% endfor %}
                 <li><a href="#">Contact</a></li>
                 <li><a href="{{ path('admin_bersi_blog') }}">Admin</a></li>
             </ul>
-            <form action="{{ path('bersi_blog_search') }}" class="navbar-form navbar-right" role="search">
+            <form action="{{ path('bersi_blog_search') }}" class="navbar-form navbar-right" role="search"
+                  id="searchForm">
                 <div class="form-group">
                     <input name="q" id="search" type="text" class="form-control" placeholder="Rechercher">
                 </div>
@@ -27,4 +30,24 @@
             </form>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').on('submit', function (e) {
+                e.preventDefault();
+                var values = {};
+                $.each($(this).serializeArray(), function (i, field) {
+                    values[field.name] = field.value;
+                });
+                $.ajax({
+                    type: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    data: values,
+                    success: function (data) {
+                        $("#articleContent").html(data);
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
 </nav>

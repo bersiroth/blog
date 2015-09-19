@@ -33,10 +33,10 @@ class ArticleController extends Controller
         } else {
             $pagination = null;
         }
-        return $this->afficherArticle($articles, $pagination);
+        return $this->afficherArticle($articles, $pagination, false);
     }
 
-    private function afficherArticle($articles, $pagination = null)
+    private function afficherArticle($articles, $pagination = null, $fullPage = true)
     {
         $moisFR = array(1 => 'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
         foreach ($articles as $key => $value) {
@@ -45,7 +45,8 @@ class ArticleController extends Controller
         $option = [];
         $option['list_articles'] = $articles;
         if ($pagination != null) $option['pagination'] = $pagination;
-        return $this->render('BersiBlogBundle::layout.html.twig', $option);
+        $tmpl = $fullPage ? 'BersiBlogBundle::layout.html.twig' : 'BersiBlogBundle:Default:article.html.twig' ;
+        return $this->render($tmpl, $option);
     }
 
     /**
