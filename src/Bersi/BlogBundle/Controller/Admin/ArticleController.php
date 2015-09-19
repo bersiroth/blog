@@ -37,21 +37,21 @@ class ArticleController extends Controller
                 'format' => 'dd/MM/yyyy HH:mm',
             ])
             ->add('title', 'text')
-            ->add('introduction', 'text')
-            ->add('image', 'file', array('mapped' => false, 'required' => false))
+            ->add('introduction', 'textarea', ['max_length' => 255,])
+            ->add('image', 'file', ['mapped' => false, 'required' => false])
             ->add('content', 'textarea')
-            ->add('published', 'checkbox', array('required' => false))
+            ->add('published', 'checkbox', ['required' => false])
             ->add('save', 'submit')
-            ->add('category', 'entity', array(
+            ->add('category', 'entity', [
                 'class' => 'BersiBlogBundle:Category',
-                'choice_label' => 'name'))
-            ->add('tags', 'entity', array(
+                'choice_label' => 'name'])
+            ->add('tags', 'entity', [
                 'class' => 'BersiBlogBundle:Tag',
                 'choice_label' => 'name',
-                'multiple' => true))
-            ->add('author', 'entity', array(
+                'multiple' => true])
+            ->add('author', 'entity', [
                 'class' => 'BersiBlogBundle:Author',
-                'choice_label' => 'pseudo'))
+                'choice_label' => 'pseudo'])
             ->getForm();
         $form->handleRequest($request);
         $image = false;
