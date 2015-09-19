@@ -48,7 +48,8 @@ class ArticleController extends Controller
             ->add('tags', 'entity', [
                 'class' => 'BersiBlogBundle:Tag',
                 'choice_label' => 'name',
-                'multiple' => true])
+                'multiple' => true,
+                'required' => false])
             ->add('author', 'entity', [
                 'class' => 'BersiBlogBundle:Author',
                 'choice_label' => 'pseudo'])

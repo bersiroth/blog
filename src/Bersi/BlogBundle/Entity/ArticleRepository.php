@@ -12,6 +12,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class ArticleRepository extends EntityRepository
 {
+    public function findAll()
+    {
+        return $this->findBy([], ['date' => 'DESC', 'id' => 'DESC']);
+    }
+
     public function getArticlesByCategory(array $categoryNames, $start, $nbArticle)
     {
         $qb = $this->createQueryBuilder('a');
@@ -64,15 +69,15 @@ class ArticleRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('a');
 
-        $qb ->where('a.title LIKE :title')
+        $qb->where('a.title LIKE :title')
             ->orWhere('a.content LIKE :content')
             ->orWhere('a.introduction LIKE :introduction')
             ->andWhere('a.published = :publish')
             ->setParameters([
-                'title'         => '%' . $search. '%',
-                'content'       => '%' . $search. '%',
-                'introduction'  => '%' . $search. '%',
-                'publish'       => true
+                'title' => '%' . $search . '%',
+                'content' => '%' . $search . '%',
+                'introduction' => '%' . $search . '%',
+                'publish' => true
             ]);
         return $qb->getQuery()->getResult();
     }
